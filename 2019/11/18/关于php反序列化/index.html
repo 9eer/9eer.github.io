@@ -51,17 +51,21 @@
   };
 </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+  <meta name="description" content="一，何为php序列化与反序列化：序列化（串行化）：是将变量转换为可保存或传输的字符串的过程；反序列化（反串行化）：就是在适当的时候把这个字符串再转化成原来的变量使用。这两个过程结合起来，可以轻松地存储和传输数据，使程序更具维护性。其次要知道两个函数：serialize()     &#x2F;&#x2F;将一个对象转换成一个字符串unserialize()   &#x2F;&#x2F;将字符串还原成一个对象示例：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;05&#x2F;hello-world&#x2F;index.html">
+<meta property="og:title" content="关于php反序列化与魔术方法">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;18&#x2F;%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96&#x2F;index.html">
 <meta property="og:site_name" content="Gee">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="一，何为php序列化与反序列化：序列化（串行化）：是将变量转换为可保存或传输的字符串的过程；反序列化（反串行化）：就是在适当的时候把这个字符串再转化成原来的变量使用。这两个过程结合起来，可以轻松地存储和传输数据，使程序更具维护性。其次要知道两个函数：serialize()     &#x2F;&#x2F;将一个对象转换成一个字符串unserialize()   &#x2F;&#x2F;将字符串还原成一个对象示例：">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-05T15:03:38.075Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B71%20(2).JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B72.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B73.JPG">
+<meta property="og:updated_time" content="2019-11-19T13:53:56.371Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B71%20(2).JPG">
 
-<link rel="canonical" href="http://yoursite.com/2019/11/05/hello-world/">
+<link rel="canonical" href="http://yoursite.com/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 
 
 <script id="page-configurations">
@@ -75,7 +79,7 @@
   };
 </script>
 
-  <title>Hello World | Gee</title>
+  <title>关于php反序列化与魔术方法 | Gee</title>
   
 
 
@@ -199,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/05/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -212,7 +216,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          关于php反序列化与魔术方法
         </h1>
 
         <div class="post-meta">
@@ -222,8 +226,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2019-11-05 23:03:38" itemprop="dateCreated datePublished" datetime="2019-11-05T23:03:38+08:00">2019-11-05</time>
+              <time title="创建时间：2019-11-18 16:19:51" itemprop="dateCreated datePublished" datetime="2019-11-18T16:19:51+08:00">2019-11-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-19 21:53:56" itemprop="dateModified" datetime="2019-11-19T21:53:56+08:00">2019-11-19</time>
+              </span>
 
           
 
@@ -236,19 +247,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>一，何为php序列化与反序列化：<br>序列化（串行化）：是将变量转换为可保存或传输的字符串的过程；反序列化（反串行化）：就是在适当的时候把这个字符串再转化成原来的变量使用<br>。这两个过程结合起来，可以轻松地存储和传输数据，使程序更具维护性。<br>其次要知道两个函数：<br>serialize()     //将一个对象转换成一个字符串<br>unserialize()   //将字符串还原成一个对象<br>示例：</p><a id="more"></a>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">test</span></span></span><br><span class="line"><span class="class">    </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> $flag = <span class="string">"flag&#123;123&#125;"</span>;</span><br><span class="line">        <span class="keyword">public</span> $a = <span class="string">"aaa"</span>;</span><br><span class="line">        <span class="keyword">static</span> $b = <span class="string">"bbb"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $test = <span class="keyword">new</span> test;</span><br><span class="line">    $a = serialize($test);</span><br><span class="line">    $b=unserialize($a);</span><br><span class="line">	print_r($a);</span><br><span class="line">	print_r($b);</span><br><span class="line"> <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>出现：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B71%20(2).JPG" alt="Aaron Swartz"><br>O:4:”test”指Object(对象) 4个字符:test<br>:2对象属性个数为2<br>{}中为属性字符数：属性值<br>注意：可以看到testflag的长度为8，序列化中却显示长度为10。这是因为它是private属性，它会在两侧加入空字节。<br>所以在传入序列化字符串进行反序列化时需要注意补齐两个空字节。<br>二，PHP魔术方法：PHP中把以两个下划线__开头的方法称为魔术方法 常见魔术方法包括：</p>
+<p>__construct()，类的构造函数(反序列化过程不调用)</p>
+<p>__destruct()，类的析构函数(反序列化形成的类在销毁时也会调用)</p>
+<p>__call()，在对象中调用一个不可访问方法时调用</p>
+<p>__callStatic()，用静态方式中调用一个不可访问方法时调用</p>
+<p>__get()，获得一个类的成员变量时调用</p>
+<p>__set()，设置一个类的成员变量时调用</p>
+<p>__isset()，当对不可访问属性调用isset()或empty()时调用</p>
+<p>__unset()，当对不可访问属性调用unset()时被调用。</p>
+<p>__sleep()，执行serialize()时，先会调用这个函数</p>
+<p>__wakeup()，执行unserialize()时，先会调用这个函数</p>
+<p>__toString()，类被当成字符串时的回应方法</p>
+<p>__invoke()，调用函数的方式调用一个对象时的回应方法</p>
+<p>__set_state()，调用var_export()导出类时，此静态方法会被调用。</p>
+<p>__clone()，当对象复制完成时调用</p>
+<p>__autoload()，尝试加载未定义的类</p>
+<p>常见魔术方法的简单介绍：<br>__sleep（常用于序列化）<br>在使用 serialize() 函数时，程序会检查类中是否存在一个 __sleep() 魔术方法。如果存在，则该方法会先被调用，然后再执行序列化操作。</p>
+<p>__wakeup（常用于反序列化）<br>在使用 unserialize() 时，会检查是否存在一个 __wakeup() 魔术方法。如果存在，则该方法会先被调用，预先准备对象需要的资源。</p>
+<p>__toString<br>__toString() 方法用于定义一个类被当成字符串时该如何处理。</p>
+<p><strong>invoke<br>当尝试以调用函数的方式调用一个对象时，</strong>invoke() 方法会被自动调用。(本特性只在 PHP 5.3.0 及以上版本有效。)</p>
+<p>__construct<br>具有 __construct 函数的类会在每次创建新对象时先调用此方法，适合在使用对象之前做一些初始化工作。</p>
+<p>__destruct<br>__destruct 函数会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行</p>
+<p>以下是用于PHP重载的魔术方法（可参考PHP官网示例<a href="https://www.php.net/manual/zh/language.oop5.overloading.php）：" target="_blank" rel="noopener">https://www.php.net/manual/zh/language.oop5.overloading.php）：</a><br><strong>set<br>给不可访问属性赋值时，</strong>set() 会被调用。</p>
+<p><strong>get<br>读取不可访问属性的值时，</strong>get() 会被调用。</p>
+<p><strong>isset<br>对不可访问属性调用 isset() 或 empty() 时，</strong>isset() 会被调用。</p>
+<p><strong>unset<br>对不可访问属性调用 unset() 时，</strong>unset() 会被调用。</p>
+<p><strong>call<br>在对象中调用一个不可访问方法时，</strong>call() 会被调用。<br><strong>callStatic<br>在静态上下文中调用一个不可访问方法时，</strong>callStatic() 会被调用。<br>例题1：攻防世界上一道简单的反序列化：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B72.JPG" alt="picture"><br>这是一个简单的反序列化，但是由于反序列化时会先执行<br>——wakeup（）函数，所以要想办法绕过它<br><strong>wakeup()漏洞就是与整个属性个数值有关。当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过</strong>wakeup的执行<br>所以 O:4:“xctf”:1:{s:4:“flag”;s:3:“111”;}把1改为大于1的数就行了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B73.JPG" alt="picture"></p>
 
     </div>
 
@@ -262,14 +289,14 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/08/%E8%AE%B0%E5%BD%95%E7%94%A8sqlmap%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%88%86%E7%A0%B4%EF%BC%881%EF%BC%89/" rel="next" title="记录用sqlmap进行数据库爆破（1）">
+                  <i class="fa fa-chevron-left"></i> 记录用sqlmap进行数据库爆破（1）
+                </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/11/08/%E8%AE%B0%E5%BD%95%E7%94%A8sqlmap%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%88%86%E7%A0%B4%EF%BC%881%EF%BC%89/" rel="prev" title="记录用sqlmap进行数据库爆破（1）">
-                  记录用sqlmap进行数据库爆破（1） <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -308,7 +335,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
