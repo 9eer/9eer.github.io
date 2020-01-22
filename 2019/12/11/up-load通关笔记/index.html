@@ -70,7 +70,10 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7136.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7137.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7138.JPG">
-<meta property="og:updated_time" content="2019-12-19T14:56:49.412Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7140.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7141.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7142.JPG">
+<meta property="og:updated_time" content="2020-01-22T13:21:48.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B796.JPG">
 
@@ -247,7 +250,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-19 22:56:49" itemprop="dateModified" datetime="2019-12-19T22:56:49+08:00">2019-12-19</time>
+                <time title="修改时间：2020-01-22 21:21:48" itemprop="dateModified" datetime="2020-01-22T21:21:48+08:00">2020-01-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -294,6 +297,12 @@
 <p>这个上传漏洞可以把上传的文件当作php解析，所以直接上传我们之前上传的图片马即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7136.JPG" alt="picture"></p>
 <p>0x11 Pass-14~15<br>pass-14用getimagesize()来检测是否为图片，还是一样的，上传个图片马即可<br>pass-15用exif_imagetype()检测，还是一样，直接上传一个图片马即可</p>
 <p>0x12 Pass-16<br>这一关它进行了二次渲染，如果你直接上传图片马的话，它会把图片里的php代码清除掉，所以要从它这几个二次渲染的函数入手，imagecreatefromjpeg、imagecreatefrompng、imagecreatefromgif这几个图片处理函数<br>但是如果这几个函数处理的不是图片就会报错，从而不会删除里面的php代码，所以我们直接将我们要上传的php木马，后缀改为jpg，上传虽然会报错，但是你可以在upload目录下发现它已经上传成功了（注意MIME类型要改为image/jpeg）<br>之后利用文件包含漏洞即可拿到shell<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7137.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7138.JPG" alt="picture"></p>
+<p>0x13 Pass-17<br>这一关是条件竞争漏洞<br>基本原理：<br>条件竞争是指一个系统的运行结果依赖于不受控制的事件的先后顺序。当这些不受控制的事件并没有按照开发者想要的方式运行时，就可能会出现 bug。尤其在当前我们的系统中大量对资源进行共享，如果处理不当的话，就会产生条件竞争漏洞。<br>竞争条件”发生在多个线程同时访问同一个共享代码、变量、文件等没有进行锁操作或者同步操作的场景中<br>比如这一题，通过代码审计我们可以发现，它首先是个白名单验证，若检测到不在白名单中的后缀名，则将其删除 ，我们可以利用条件竞争在php文件被删除之前就访问到他，从而执行shell。<br>具体做法：我们可以用burpsite，抓包，不断地上传php文件，然后再去浏览器中不断访问（可以用python脚本），在被删除之前访问到他就可以了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7140.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7141.JPG" alt="picture"><br>但是这样只是暂时能访问这个php文件，没有真正地将马上传到服务端，所以我们需要简单修改一下php代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">fputs(fopen(<span class="string">"./info.php"</span>, <span class="string">"w"</span>), <span class="string">'&lt;?php @eval($_POST["pass"]) ?&gt;'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这样，只要我们在不断上传地过程中，访问到这个php文件，它就会你执行，它会像服务端上传名为info.php的文件内容为：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>($_POST[<span class="string">"pass"</span>]) <span class="meta">?&gt;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7142.JPG" alt="picture"><br>成功写入shell。</p>
+<p>0x14 Pass-18<br>跟第17关差不多，都是竞争上传，只是改成了上传图片马，但是做的时候发现不对，他并没有删除我上传的图片马，变得和第13-15关一样，直接上传一个图片马即可</p>
 
     </div>
 
