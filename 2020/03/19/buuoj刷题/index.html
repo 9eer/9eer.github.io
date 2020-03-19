@@ -58,11 +58,8 @@
 <meta property="og:site_name" content="Gee">
 <meta property="og:description" content="1.checkin一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&amp;lt;?,被过滤了，改一下脚本1&amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;eval($_POST[&amp;apos;a&amp;apos;]);&amp;lt;&#x2F;script&amp;gt;改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;2.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;1.jpg">
-<meta property="og:updated_time" content="2020-03-19T13:14:04.967Z">
+<meta property="og:updated_time" content="2020-03-19T13:20:59.108Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;2.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/19/buuoj%E5%88%B7%E9%A2%98/">
 
@@ -231,7 +228,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-19 20:09:59 / 修改时间：21:14:04" itemprop="dateCreated datePublished" datetime="2020-03-19T20:09:59+08:00">2020-03-19</time>
+              <time title="创建时间：2020-03-19 20:09:59 / 修改时间：21:20:59" itemprop="dateCreated datePublished" datetime="2020-03-19T20:09:59+08:00">2020-03-19</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -261,7 +258,11 @@
 
 <p>于是我们可以这样子，先上传一个.user.ini ，其内容为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=webshell.jpg</span><br></pre></td></tr></table></figure>
-<p>然后在上传我们的一句话木马<br><img src="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/2.jpg" alt><br>访问index.php可以看到，我们的webshell.jpg已经被当作php文件中执行了<br><img src="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/1.jpg" alt><br>最后system(“cat /flag”);拿到flag</p>
+<p>然后在上传我们的一句话木马</p>
+
+<p>访问index.php可以看到，我们的webshell.jpg已经被当作php文件中执行了</p>
+
+<p>最后system(“cat /flag”);拿到flag</p>
 
     </div>
 
