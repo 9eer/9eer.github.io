@@ -73,7 +73,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7140.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7141.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7142.JPG">
-<meta property="og:updated_time" content="2020-01-22T13:21:48.918Z">
+<meta property="og:updated_time" content="2020-04-01T12:19:20.019Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B796.JPG">
 
@@ -250,7 +250,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-22 21:21:48" itemprop="dateModified" datetime="2020-01-22T21:21:48+08:00">2020-01-22</time>
+                <time title="修改时间：2020-04-01 20:19:20" itemprop="dateModified" datetime="2020-04-01T20:19:20+08:00">2020-04-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,34 +275,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>0x01  Pass-01<br>这关就用js限制了只能提交JPG,PNG，GIF的格式，因为就前端限制，所以抓包改包即可,首先将要上传的木马后缀改为jpg，然后在截获上传的包将其后缀改回来即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B796.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B797.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B798.JPG" alt="picture"><br>上传成功！</p><p>0x02  Pass-02<br>和前一关差不多，不过注意做之前要清空上传文件，抓包之后。改即可，不过他这题实在后台验证，不清楚为啥怎么改可以绕过，去网上查了一下发现是MIME类型检测（<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types），只要这个" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types），只要这个</a><br>Content-Type类型改成image/gif即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7111.JPG" alt="picture"></p><a id="more"></a>
+        <h3 id="0x01-Pass-01"><a href="#0x01-Pass-01" class="headerlink" title="0x01  Pass-01"></a>0x01  Pass-01</h3><p>这关就用js限制了只能提交JPG,PNG，GIF的格式，因为就前端限制，所以抓包改包即可,首先将要上传的木马后缀改为jpg，然后在截获上传的包将其后缀改回来即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B796.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B797.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B798.JPG" alt="picture"><br>上传成功！</p><h3 id="0x02-Pass-02"><a href="#0x02-Pass-02" class="headerlink" title="0x02  Pass-02"></a>0x02  Pass-02</h3><p>和前一关差不多，不过注意做之前要清空上传文件，抓包之后。改即可，不过他这题实在后台验证，不清楚为啥怎么改可以绕过，去网上查了一下发现是MIME类型检测（<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types），只要这个" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types），只要这个</a><br>Content-Type类型改成image/gif即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7111.JPG" alt="picture"></p><a id="more"></a><!-- toc -->
 
-<p>0x03  Pass-03<br>这一关，它对我们的后缀做了限制，不能有asp,php.jsp,aspx等后缀名，还过滤了.和空格，并且强制转化为小写，过滤了字符串’::$DATA’,后再查阅资料，发现php还可以解析php1，php2，php3为后缀的<br>文件<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7113.JPG" alt="picture"><br>成功绕过</p>
-<p>0x04  Pass-04<br>在第三关的基础上还限制了php1 php2 phtml等各种罕见后缀，于是可以考虑.htaccess去绕过<br>关于什么是.htaccess:<br>htaccess文件(或者”分布式配置文件”）提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。<br>概述来说，htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。<br>启用.htaccess，需要修改httpd.conf，启用AllowOverride，并可以用AllowOverride限制特定命令的使用。如果需要使用.htaccess以外的其他文件名，可以用AccessFileName指令来改变。例如，需要使用.config ，则可以在服务器配置文件中按以下方法配置：AccessFileName .config 。<br>笼统地说，.htaccess可以帮我们实现包括：文件夹密码保护、用户自动重定向、自定义错误页面、改变你的文件扩展名、封禁特定IP地址的用户、只允许特定IP地址的用户、禁止目录列表，以及使用其他文件作为index文件等一些功能<br>.htaccess文件(或者”分布式配置文件”)提供了针对每个目录改变配置的方法,意思是上传.htaccess文件和你上传的图片在一个目录下，然后你可以在.htaccess中写入特定的内容让你上传的jpg文件当作php文件执行<br>具体在.htaccess中写入的内容：</p>
+<!-- toc -->
+
+<!-- toc -->
+<h3 id="0x03-Pass-03"><a href="#0x03-Pass-03" class="headerlink" title="0x03  Pass-03"></a>0x03  Pass-03</h3><p>这一关，它对我们的后缀做了限制，不能有asp,php.jsp,aspx等后缀名，还过滤了.和空格，并且强制转化为小写，过滤了字符串’::$DATA’,后再查阅资料，发现php还可以解析php1，php2，php3为后缀的<br>文件<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7113.JPG" alt="picture"><br>成功绕过</p>
+<!-- toc -->
+<h3 id="0x04-Pass-04"><a href="#0x04-Pass-04" class="headerlink" title="0x04  Pass-04"></a>0x04  Pass-04</h3><p>在第三关的基础上还限制了php1 php2 phtml等各种罕见后缀，于是可以考虑.htaccess去绕过<br>关于什么是.htaccess:<br>htaccess文件(或者”分布式配置文件”）提供了针对目录改变配置的方法， 即，在一个特定的文档目录中放置一个包含一个或多个指令的文件， 以作用于此目录及其所有子目录。作为用户，所能使用的命令受到限制。管理员可以通过Apache的AllowOverride指令来设置。<br>概述来说，htaccess文件是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向、自定义404错误页面、改变文件扩展名、允许/阻止特定的用户或者目录的访问、禁止目录列表、配置默认文档等功能。<br>启用.htaccess，需要修改httpd.conf，启用AllowOverride，并可以用AllowOverride限制特定命令的使用。如果需要使用.htaccess以外的其他文件名，可以用AccessFileName指令来改变。例如，需要使用.config ，则可以在服务器配置文件中按以下方法配置：AccessFileName .config 。<br>笼统地说，.htaccess可以帮我们实现包括：文件夹密码保护、用户自动重定向、自定义错误页面、改变你的文件扩展名、封禁特定IP地址的用户、只允许特定IP地址的用户、禁止目录列表，以及使用其他文件作为index文件等一些功能<br>.htaccess文件(或者”分布式配置文件”)提供了针对每个目录改变配置的方法,意思是上传.htaccess文件和你上传的图片在一个目录下，然后你可以在.htaccess中写入特定的内容让你上传的jpg文件当作php文件执行<br>具体在.htaccess中写入的内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;nosafe.jpg&quot;&gt;</span><br><span class="line">  SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
 <p>这样上传的nosafe.jpg文件可以被当作php文件执行<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7116.JPG" alt="picture"></p>
-<p>0x05  Pass-05~Pass-08<br>第五关很简单和前两关类似，都是黑名单绕过，没有强制转化为大小写将后缀名改为phP之类的即可  </p>
+<!-- toc -->
+<h3 id="0x05-Pass-05-Pass-08"><a href="#0x05-Pass-05-Pass-08" class="headerlink" title="0x05  Pass-05~Pass-08"></a>0x05  Pass-05~Pass-08</h3><p>第五关很简单和前两关类似，都是黑名单绕过，没有强制转化为大小写将后缀名改为phP之类的即可  </p>
 <p>第六关没有过滤空格，可以在文件名后面加空格，windows会将空格自动去掉，所以还是按照php<br>文件执行</p>
 <p>第七关没有删除文件末尾的点，php后面加个.可以绕过服务器端的检测，而windows会将其去掉执行</p>
 <p>第八关没有对后缀名进行去”::$DATA”处理，利用windows特性，可在后缀名中加” ::$DATA”绕过</p>
 <p>其实这四关都是黑名单验证也都可以用.htaccess绕过</p>
-<p>0x06   Pass-09<br>这关在第四关的基础上还限制了.htaccess文件，不过仔细看他删文件末尾的点和首尾去空格那两个函数，deldot（）函数删除文件末尾的.，tirm函数首尾去空，那么如果我们在文件末尾加<br>. .,的话，先执行deldot函数，删除第一个点，然后执行tirm函数删掉空格，这样还剩一个.未被删除 成功绕过<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7130.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7131.JPG" alt="picture"></p>
-<p>0x07  Pass-10<br>这关用了一个函数从左向右匹配，匹配到php就将其删除，所以可一双写绕过，后缀改为pphphp，这样删完之后还剩下php即可绕过<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7132.JPG" alt="picture"></p>
-<p>0x08  Pass-11<br>这一关是白名单，然后还会把你的后缀强制改为jpg，想着用0x00截断绕过，然而一直没成功，然后去网上找了找原因，发现是PHP版本的问题，需要php&lt;5.3.4，然而我的php版本最低也有5.6.40<br>所以就一直没有成功</p>
-<p>0x9 Pass-12<br>还是00截断，只是由于这次是POST上传的，不会自动对%00进行解码，所以需要你在16进制中自行修改</p>
-<p>0x10 Pass-13<br>这一题是要上传图片马，因为它这里是检测你的文件头是否和jpg或者png或者gif一致，而图片马的原理就是把php代码放在图片内容的中，然后利用php的文件包含漏洞可以将图片当作php代码<br>执行，这样原先包含在图片中的php代码就可以被解析执行了，在windows下制作图片马比较简单一个简单的copy命令即可：</p>
+<!-- toc -->
+<h3 id="0x06-Pass-09"><a href="#0x06-Pass-09" class="headerlink" title="0x06   Pass-09"></a>0x06   Pass-09</h3><p>这关在第四关的基础上还限制了.htaccess文件，不过仔细看他删文件末尾的点和首尾去空格那两个函数，deldot（）函数删除文件末尾的.，tirm函数首尾去空，那么如果我们在文件末尾加<br>. .,的话，先执行deldot函数，删除第一个点，然后执行tirm函数删掉空格，这样还剩一个.未被删除 成功绕过<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7130.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7131.JPG" alt="picture"></p>
+<!-- toc -->
+<h3 id="0x07-Pass-10"><a href="#0x07-Pass-10" class="headerlink" title="0x07  Pass-10"></a>0x07  Pass-10</h3><p>这关用了一个函数从左向右匹配，匹配到php就将其删除，所以可一双写绕过，后缀改为pphphp，这样删完之后还剩下php即可绕过<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7132.JPG" alt="picture"></p>
+<!-- toc -->
+<h3 id="0x08-Pass-11"><a href="#0x08-Pass-11" class="headerlink" title="0x08  Pass-11"></a>0x08  Pass-11</h3><p>这一关是白名单，然后还会把你的后缀强制改为jpg，想着用0x00截断绕过，然而一直没成功，然后去网上找了找原因，发现是PHP版本的问题，需要php&lt;5.3.4，然而我的php版本最低也有5.6.40<br>所以就一直没有成功</p>
+<!-- toc -->
+<h3 id="0x09-Pass-12"><a href="#0x09-Pass-12" class="headerlink" title="0x09 Pass-12"></a>0x09 Pass-12</h3><p>还是00截断，只是由于这次是POST上传的，不会自动对%00进行解码，所以需要你在16进制中自行修改</p>
+<!-- toc -->
+<h3 id="0x10-Pass-13"><a href="#0x10-Pass-13" class="headerlink" title="0x10 Pass-13"></a>0x10 Pass-13</h3><p>这一题是要上传图片马，因为它这里是检测你的文件头是否和jpg或者png或者gif一致，而图片马的原理就是把php代码放在图片内容的中，然后利用php的文件包含漏洞可以将图片当作php代码<br>执行，这样原先包含在图片中的php代码就可以被解析执行了，在windows下制作图片马比较简单一个简单的copy命令即可：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy test.jpg/b+nosafe.php/a webshell2.jpg</span><br></pre></td></tr></table></figure>
 <p>/b表示以二进制形式合并 /a表示以ASCII形式合并，把图片马上传之后是不能直接解析的，这里要用到文件包含漏洞，事先搭建简单的有文件包含漏洞的本地环境，php代码如下：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">$file = $_GET[<span class="string">'page'</span>];</span><br><span class="line"><span class="keyword">include</span> $file; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这个上传漏洞可以把上传的文件当作php解析，所以直接上传我们之前上传的图片马即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7136.JPG" alt="picture"></p>
-<p>0x11 Pass-14~15<br>pass-14用getimagesize()来检测是否为图片，还是一样的，上传个图片马即可<br>pass-15用exif_imagetype()检测，还是一样，直接上传一个图片马即可</p>
-<p>0x12 Pass-16<br>这一关它进行了二次渲染，如果你直接上传图片马的话，它会把图片里的php代码清除掉，所以要从它这几个二次渲染的函数入手，imagecreatefromjpeg、imagecreatefrompng、imagecreatefromgif这几个图片处理函数<br>但是如果这几个函数处理的不是图片就会报错，从而不会删除里面的php代码，所以我们直接将我们要上传的php木马，后缀改为jpg，上传虽然会报错，但是你可以在upload目录下发现它已经上传成功了（注意MIME类型要改为image/jpeg）<br>之后利用文件包含漏洞即可拿到shell<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7137.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7138.JPG" alt="picture"></p>
-<p>0x13 Pass-17<br>这一关是条件竞争漏洞<br>基本原理：<br>条件竞争是指一个系统的运行结果依赖于不受控制的事件的先后顺序。当这些不受控制的事件并没有按照开发者想要的方式运行时，就可能会出现 bug。尤其在当前我们的系统中大量对资源进行共享，如果处理不当的话，就会产生条件竞争漏洞。<br>竞争条件”发生在多个线程同时访问同一个共享代码、变量、文件等没有进行锁操作或者同步操作的场景中<br>比如这一题，通过代码审计我们可以发现，它首先是个白名单验证，若检测到不在白名单中的后缀名，则将其删除 ，我们可以利用条件竞争在php文件被删除之前就访问到他，从而执行shell。<br>具体做法：我们可以用burpsite，抓包，不断地上传php文件，然后再去浏览器中不断访问（可以用python脚本），在被删除之前访问到他就可以了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7140.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7141.JPG" alt="picture"><br>但是这样只是暂时能访问这个php文件，没有真正地将马上传到服务端，所以我们需要简单修改一下php代码</p>
+<!-- toc -->
+<h3 id="0x11-Pass-14-15"><a href="#0x11-Pass-14-15" class="headerlink" title="0x11 Pass-14~15"></a>0x11 Pass-14~15</h3><p>pass-14用getimagesize()来检测是否为图片，还是一样的，上传个图片马即可<br>pass-15用exif_imagetype()检测，还是一样，直接上传一个图片马即可</p>
+<!-- toc -->
+<h3 id="0x12-Pass-16"><a href="#0x12-Pass-16" class="headerlink" title="0x12 Pass-16"></a>0x12 Pass-16</h3><p>这一关它进行了二次渲染，如果你直接上传图片马的话，它会把图片里的php代码清除掉，所以要从它这几个二次渲染的函数入手，imagecreatefromjpeg、imagecreatefrompng、imagecreatefromgif这几个图片处理函数<br>但是如果这几个函数处理的不是图片就会报错，从而不会删除里面的php代码，所以我们直接将我们要上传的php木马，后缀改为jpg，上传虽然会报错，但是你可以在upload目录下发现它已经上传成功了（注意MIME类型要改为image/jpeg）<br>之后利用文件包含漏洞即可拿到shell<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7137.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7138.JPG" alt="picture"></p>
+<!-- toc -->
+<h3 id="0x13-Pass-17"><a href="#0x13-Pass-17" class="headerlink" title="0x13 Pass-17"></a>0x13 Pass-17</h3><p>这一关是条件竞争漏洞<br>基本原理：<br>条件竞争是指一个系统的运行结果依赖于不受控制的事件的先后顺序。当这些不受控制的事件并没有按照开发者想要的方式运行时，就可能会出现 bug。尤其在当前我们的系统中大量对资源进行共享，如果处理不当的话，就会产生条件竞争漏洞。<br>竞争条件”发生在多个线程同时访问同一个共享代码、变量、文件等没有进行锁操作或者同步操作的场景中<br>比如这一题，通过代码审计我们可以发现，它首先是个白名单验证，若检测到不在白名单中的后缀名，则将其删除 ，我们可以利用条件竞争在php文件被删除之前就访问到他，从而执行shell。<br>具体做法：我们可以用burpsite，抓包，不断地上传php文件，然后再去浏览器中不断访问（可以用python脚本），在被删除之前访问到他就可以了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7140.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7141.JPG" alt="picture"><br>但是这样只是暂时能访问这个php文件，没有真正地将马上传到服务端，所以我们需要简单修改一下php代码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">fputs(fopen(<span class="string">"./info.php"</span>, <span class="string">"w"</span>), <span class="string">'&lt;?php @eval($_POST["pass"]) ?&gt;'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这样，只要我们在不断上传地过程中，访问到这个php文件，它就会你执行，它会像服务端上传名为info.php的文件内容为：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>($_POST[<span class="string">"pass"</span>]) <span class="meta">?&gt;</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 <p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7142.JPG" alt="picture"><br>成功写入shell。</p>
-<p>0x14 Pass-18<br>跟第17关差不多，都是竞争上传，只是改成了上传图片马，但是做的时候发现不对，他并没有删除我上传的图片马，变得和第13-15关一样，直接上传一个图片马即可</p>
+<!-- toc -->
+<h3 id="0x14-Pass-18"><a href="#0x14-Pass-18" class="headerlink" title="0x14 Pass-18"></a>0x14 Pass-18</h3><p>跟第17关差不多，都是竞争上传，只是改成了上传图片马，但是做的时候发现不对，他并没有删除我上传的图片马，变得和第13-15关一样，直接上传一个图片马即可</p>
 
     </div>
 
@@ -365,6 +379,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-Pass-01"><span class="nav-number">1.</span> <span class="nav-text">0x01  Pass-01</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-Pass-02"><span class="nav-number">2.</span> <span class="nav-text">0x02  Pass-02</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-Pass-03"><span class="nav-number">3.</span> <span class="nav-text">0x03  Pass-03</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-Pass-04"><span class="nav-number">4.</span> <span class="nav-text">0x04  Pass-04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x05-Pass-05-Pass-08"><span class="nav-number">5.</span> <span class="nav-text">0x05  Pass-05~Pass-08</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x06-Pass-09"><span class="nav-number">6.</span> <span class="nav-text">0x06   Pass-09</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x07-Pass-10"><span class="nav-number">7.</span> <span class="nav-text">0x07  Pass-10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x08-Pass-11"><span class="nav-number">8.</span> <span class="nav-text">0x08  Pass-11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x09-Pass-12"><span class="nav-number">9.</span> <span class="nav-text">0x09 Pass-12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x10-Pass-13"><span class="nav-number">10.</span> <span class="nav-text">0x10 Pass-13</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x11-Pass-14-15"><span class="nav-number">11.</span> <span class="nav-text">0x11 Pass-14~15</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x12-Pass-16"><span class="nav-number">12.</span> <span class="nav-text">0x12 Pass-16</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x13-Pass-17"><span class="nav-number">13.</span> <span class="nav-text">0x13 Pass-17</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x14-Pass-18"><span class="nav-number">14.</span> <span class="nav-text">0x14 Pass-18</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
