@@ -232,7 +232,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-09 21:27:03" itemprop="dateModified" datetime="2020-04-09T21:27:03+08:00">2020-04-09</time>
+                <time title="修改时间：2020-04-10 09:55:46" itemprop="dateModified" datetime="2020-04-10T09:55:46+08:00">2020-04-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,7 +257,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>首先，nmap确定靶机地址：192.168.80.4，然后再nmap -A走一波<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7181.JPG" alt><br>发现开放了8000端口，看起来应该是个博客，访问了一下<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7182.JPG" alt><br>看见了一个疑似sql注入点，但是试了一下好像不行 ，并且它会自动跳转到localhost，所以就很难进行下去，不过<br>之前nmap扫出来，他还有个upload.php，于是访问一下，看到了一个文件上传的点，然后看页面源代码的话会发现。他给了我们一个提示，他把源码上传到了github，然后好像现在好像已经被删了，就只能看看别人的wp里的源码</p>
+          <h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>首先，nmap确定靶机地址：192.168.80.4，然后再nmap -A走一波<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7181.JPG" alt="picture"><br>发现开放了8000端口，看起来应该是个博客，访问了一下<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7182.JPG" alt><br>看见了一个疑似sql注入点，但是试了一下好像不行 ，并且它会自动跳转到localhost，所以就很难进行下去，不过<br>之前nmap扫出来，他还有个upload.php，于是访问一下，看到了一个文件上传的点，然后看页面源代码的话会发现。他给了我们一个提示，他把源码上传到了github，然后好像现在好像已经被删了，就只能看看别人的wp里的源码</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/04/06/HackinOs/#more" rel="contents">
