@@ -53,26 +53,26 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Gee">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;index.html">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;page&#x2F;2&#x2F;index.html">
 <meta property="og:site_name" content="Gee">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/archives/">
+<link rel="canonical" href="http://yoursite.com/page/2/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: false,
+    isHome: true,
     isPost: false,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | Gee</title>
+  <title>Gee</title>
   
 
 
@@ -196,233 +196,178 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+        
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 12 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/1.jpg">
+      <meta itemprop="name" content="Gee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gee">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">sql注入笔记1（sqli-labs基础挑战，1-4关）</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-26 19:21:39" itemprop="dateCreated datePublished" datetime="2019-11-26T19:21:39+08:00">2019-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 16:30:15" itemprop="dateModified" datetime="2019-12-09T16:30:15+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sql%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index">
+                    <span itemprop="name">sql注入</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <h1 class="collection-header">2020</h1>
+          <p>刚刚开始接触sql注入，记点笔记</p><p>首先要判断是什么类型的注入：<br>一.常见的sql注入按照参数类型可分为五种：数字型，字符型还有搜索型注入，内联式，终止式<br>  0x01数字型注入<br>  测试方法：输入id=1 and1=1返回成功，输入id=1 and 1=2，返回失败，则为数字型注入，原因：<br>例如sql语句为：SELECT * FROM test WHERE id=$id 当输入id=1 and1=1,语句变为:SELECT * FROM test WHERE id=1 and1=1<br>这个SQL语句and左边是返回成功的，因为我们是在有这个id的情况下后面加上我们的注入语句，如果这个id不存在，那就没法测试了<br>而在and右边，1=1也是恒成立的，所以整个语句返回的是成功。当然，如果后面改成了1=2的话，因为1=2是不成立的，and语句的判<br>断逻辑是只要有一个不成立，就返回失败，所以1=2最后会返回的是失败</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-12T20:28:19+08:00"
-              content="2020-05-12">
-          05-12
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/12/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" itemprop="url">
-            <span itemprop="name">原型链污染</span>
-          </a>
-      </h2>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
+  
+  
+  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-05-04T13:19:31+08:00"
-              content="2020-05-04">
-          05-04
-        </time>
-      </div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/1.jpg">
+      <meta itemprop="name" content="Gee">
+      <meta itemprop="description" content="">
+    </span>
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/" itemprop="url">
-            <span itemprop="name">无字母数字的webshell</span>
-          </a>
-      </h2>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gee">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">关于php反序列化与魔术方法</a>
+        </h1>
 
-    </header>
-  </article>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+              <time title="创建时间：2019-11-18 16:19:51" itemprop="dateCreated datePublished" datetime="2019-11-18T16:19:51+08:00">2019-11-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-02 17:48:58" itemprop="dateModified" datetime="2019-12-02T17:48:58+08:00">2019-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+            </span>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-04-26T13:39:45+08:00"
-              content="2020-04-26">
-          04-26
-        </time>
-      </div>
+          
 
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/04/26/Joomla%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" itemprop="url">
-            <span itemprop="name">Joomla反序列化漏洞</span>
-          </a>
-      </h2>
+        </div>
+      </header>
 
-    </header>
-  </article>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-04-13T20:36:43+08:00"
-              content="2020-04-13">
-          04-13
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" itemprop="url">
-            <span itemprop="name">phar反序列化</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-04-06T21:14:45+08:00"
-              content="2020-04-06">
-          04-06
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/04/06/HackinOs/" itemprop="url">
-            <span itemprop="name">HackinOs</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-19T20:09:59+08:00"
-              content="2020-03-19">
-          03-19
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/" itemprop="url">
-            <span itemprop="name">buuoj刷题</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-02-04T09:30:51+08:00"
-              content="2020-02-04">
-          02-04
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2020/02/04/BUUCTF-Web-WriteUP/" itemprop="url">
-            <span itemprop="name">BUUCTF Web WriteUP</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
+      
+          <p>一，何为php序列化与反序列化：<br>序列化（串行化）：是将变量转换为可保存或传输的字符串的过程；反序列化（反串行化）：就是在适当的时候把这个字符串再转化成原来的变量使用<br>。这两个过程结合起来，可以轻松地存储和传输数据，使程序更具维护性。<br>其次要知道两个函数：<br>serialize()     //将一个对象转换成一个字符串<br>unserialize()   //将字符串还原成一个对象<br>示例：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-11T11:57:21+08:00"
-              content="2019-12-11">
-          12-11
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/" itemprop="url">
-            <span itemprop="name">upload-labs通关笔记</span>
-          </a>
-      </h2>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
+  
+  
+  
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-12-02T21:25:08+08:00"
-              content="2019-12-02">
-          12-02
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/12/02/%E5%85%A5%E9%97%A8%E7%BA%A7%E9%9D%B6%E6%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88Eric%EF%BC%89/" itemprop="url">
-            <span itemprop="name">入门级靶机实战（Eric）</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-29T17:54:45+08:00"
-              content="2019-11-29">
-          11-29
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/" itemprop="url">
-            <span itemprop="name">sql注入笔记2（sqli-labs  5-30）</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-
-    </div>
   </div>
-  
-  
-  
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 

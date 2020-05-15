@@ -201,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/26/Joomla%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/12/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/uploads/1.jpg">
@@ -215,7 +215,165 @@
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/04/26/Joomla%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">Joomla反序列化</a>
+            <a href="/2020/05/12/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" class="post-title-link" itemprop="url">原型链污染</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-12 20:28:19" itemprop="dateCreated datePublished" datetime="2020-05-12T20:28:19+08:00">2020-05-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-15 23:07:53" itemprop="dateModified" datetime="2020-05-15T23:07:53+08:00">2020-05-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">题解</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>第一次基础JavaScript的原型链污染</p>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/1.jpg">
+      <meta itemprop="name" content="Gee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gee">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/" class="post-title-link" itemprop="url">无字母数字的webshell</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-04 13:19:31" itemprop="dateCreated datePublished" datetime="2020-05-04T13:19:31+08:00">2020-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-05 13:46:00" itemprop="dateModified" datetime="2020-05-05T13:46:00+08:00">2020-05-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在做文件上传或者命令执行的题的时候经常会遇到禁用字母和数字的题目，所以我这里学习记录一下：<br>虽然禁用了字母和数字，但是我们可以利用一些特殊的运算符，来将一些字符组合成字母和数字<br>所以首先我们来了解一下php中的异或的概念：<br>在PHP中，两个变量进行异或时，先会将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完，又将结果从二进制转换成了ASCII值，再将ASCII值转换成字符串<br>比如我们想要构造字母A，A的ascii值为65，对应的二进制数为：1000001，我们就可以用字符：{和:来构造，{的ascii码值对应的二进制为：1111011。而<br>:对应的二进制为0111010,两个进行异或操作之后为1000001也就是字母A，我们也可以用同样的方法去构造其他字母（对于有些不可打印字符可以用url编码表示），类似于异或，我们同样也可以用其他运算符;比如取反来构造字母，下面是个典型的用异或来构造无字母的webshell</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/26/Joomla%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/1.jpg">
+      <meta itemprop="name" content="Gee">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gee">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/26/Joomla%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">Joomla反序列化漏洞</a>
         </h1>
 
         <div class="post-meta">
@@ -232,7 +390,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-27 22:38:30" itemprop="dateModified" datetime="2020-04-27T22:38:30+08:00">2020-04-27</time>
+                <time title="修改时间：2020-05-04 13:17:51" itemprop="dateModified" datetime="2020-05-04T13:17:51+08:00">2020-05-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,7 +418,7 @@
           <p>首先拿安恒4月的月赛一道反序列化来当例子，这里记录学习一下<br>先看一下源码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">show_source(&quot;index.php&quot;);</span><br><span class="line">function write($data) &#123;</span><br><span class="line">    return str_replace(chr(0) . &apos;*&apos; . chr(0), &apos;\0\0\0&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function read($data) &#123;</span><br><span class="line">    return str_replace(&apos;\0\0\0&apos;, chr(0) . &apos;*&apos; . chr(0), $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class A&#123;</span><br><span class="line">    public $username;</span><br><span class="line">    public $password;</span><br><span class="line">    function __construct($a, $b)&#123;</span><br><span class="line">        $this-&gt;username = $a;</span><br><span class="line">        $this-&gt;password = $b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class B&#123;</span><br><span class="line">    public $b = &apos;gqy&apos;;</span><br><span class="line">    function __destruct()&#123;</span><br><span class="line">        $c = &apos;a&apos;.$this-&gt;b;</span><br><span class="line">        echo $c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class C&#123;</span><br><span class="line">    public $c;</span><br><span class="line">    function __toString()&#123;</span><br><span class="line">        //flag.php</span><br><span class="line">        echo file_get_contents($this-&gt;c);</span><br><span class="line">        return &apos;nice&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = new A($_GET[&apos;a&apos;],$_GET[&apos;b&apos;]);</span><br><span class="line">//省略了存储序列化数据的过程,下面是取出来并反序列化的操作</span><br><span class="line">$b = unserialize(read(write(serialize($a))));</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2020/04/26/Joomla%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
+              <a class="btn" href="/2020/04/26/Joomla%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -310,6 +468,24 @@
 
               <time title="创建时间：2020-04-13 20:36:43" itemprop="dateCreated datePublished" datetime="2020-04-13T20:36:43+08:00">2020-04-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-15 23:07:40" itemprop="dateModified" datetime="2020-05-15T23:07:40+08:00">2020-05-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+            </span>
 
           
 
@@ -322,7 +498,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h3 id="phar原理"><a href="#phar原理" class="headerlink" title="phar原理"></a>phar原理</h3><p>phar扩展提供了一种将整个PHP应用程序放入称为“ phar”（PHP存档）的单个文件中的方法，以便于分发和安装。 除了提供此服务外，phar扩展还提供了一种文件格式抽象方法，用于通过PharData类创建和处理tar和zip文件，就像PDO提供了用于访问不同数据库的统一接口一样。 与无法在不同数据库之间进行转换的PDO不同，Phar还可以使用单行代码在tar，zip和phar文件格式之间进行转换。 有关一个示例，请参见Phar :: convertToExecutable（）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -835,175 +1019,12 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">sql注入笔记1（sqli-labs基础挑战，1-4关）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-26 19:21:39" itemprop="dateCreated datePublished" datetime="2019-11-26T19:21:39+08:00">2019-11-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-09 16:30:15" itemprop="dateModified" datetime="2019-12-09T16:30:15+08:00">2019-12-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/sql%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index">
-                    <span itemprop="name">sql注入</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>刚刚开始接触sql注入，记点笔记</p><p>首先要判断是什么类型的注入：<br>一.常见的sql注入按照参数类型可分为五种：数字型，字符型还有搜索型注入，内联式，终止式<br>  0x01数字型注入<br>  测试方法：输入id=1 and1=1返回成功，输入id=1 and 1=2，返回失败，则为数字型注入，原因：<br>例如sql语句为：SELECT * FROM test WHERE id=$id 当输入id=1 and1=1,语句变为:SELECT * FROM test WHERE id=1 and1=1<br>这个SQL语句and左边是返回成功的，因为我们是在有这个id的情况下后面加上我们的注入语句，如果这个id不存在，那就没法测试了<br>而在and右边，1=1也是恒成立的，所以整个语句返回的是成功。当然，如果后面改成了1=2的话，因为1=2是不成立的，and语句的判<br>断逻辑是只要有一个不成立，就返回失败，所以1=2最后会返回的是失败</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">关于php反序列化与魔术方法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-18 16:19:51" itemprop="dateCreated datePublished" datetime="2019-11-18T16:19:51+08:00">2019-11-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-02 17:48:58" itemprop="dateModified" datetime="2019-12-02T17:48:58+08:00">2019-12-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>一，何为php序列化与反序列化：<br>序列化（串行化）：是将变量转换为可保存或传输的字符串的过程；反序列化（反串行化）：就是在适当的时候把这个字符串再转化成原来的变量使用<br>。这两个过程结合起来，可以轻松地存储和传输数据，使程序更具维护性。<br>其次要知道两个函数：<br>serialize()     //将一个对象转换成一个字符串<br>unserialize()   //将字符串还原成一个对象<br>示例：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/18/%E5%85%B3%E4%BA%8Ephp%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1048,7 +1069,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
