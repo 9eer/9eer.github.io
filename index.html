@@ -390,7 +390,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 22:56:10" itemprop="dateModified" datetime="2020-06-06T22:56:10+08:00">2020-06-06</time>
+                <time title="修改时间：2020-06-06 23:00:50" itemprop="dateModified" datetime="2020-06-06T23:00:50+08:00">2020-06-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -639,7 +639,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-01 21:10:08" itemprop="dateModified" datetime="2020-04-01T21:10:08+08:00">2020-04-01</time>
+                <time title="修改时间：2020-06-10 22:28:31" itemprop="dateModified" datetime="2020-06-10T22:28:31+08:00">2020-06-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -664,7 +664,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="checkin"><a href="#checkin" class="headerlink" title="checkin"></a>checkin</h3><p>一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&lt;?,被过滤了，改一下脚本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;php&quot;&gt;eval($_POST[&apos;a&apos;]);&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行了检查。继续尝试发现，应该只是检测了文件头<br>，所以上传一个简单的图片马即可，但是这上传的只是一个图片形式，这题目也没有文件包含的漏洞可以给我们利用，想尝试.htaccess来让他把jpg文件当作php执行，但是尝试了一下，<br>失败了，看了wp才知道要用.user.ini,以前从来没有听说过呀，具体原理可以看看这个大佬的文章<a href="https://wooyun.js.org/drops/user.ini文件构成的php后门.html、" target="_blank" rel="noopener">https://wooyun.js.org/drops/user.ini文件构成的php后门.html、</a><br>大致意思就是，在.user.ini文件中添加内容：auto_prepend_file=xxx.jpg,那么在所有的php文件执行前都会把xxx.jpg 当作php文件先执行一遍，它类似于.htaccess文件，但是应用比他更广</p>
+          <h3 id="2019SUCTF"><a href="#2019SUCTF" class="headerlink" title="2019SUCTF"></a>2019SUCTF</h3><p>1.checkin<br>一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&lt;?,被过滤了，改一下脚本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;php&quot;&gt;eval($_POST[&apos;a&apos;]);&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行了检查。继续尝试发现，应该只是检测了文件头<br>，所以上传一个简单的图片马即可，但是这上传的只是一个图片形式，这题目也没有文件包含的漏洞可以给我们利用，想尝试.htaccess来让他把jpg文件当作php执行，但是尝试了一下，<br>失败了，看了wp才知道要用.user.ini,以前从来没有听说过呀，具体原理可以看看这个大佬的文章<a href="https://wooyun.js.org/drops/user.ini文件构成的php后门.html、" target="_blank" rel="noopener">https://wooyun.js.org/drops/user.ini文件构成的php后门.html、</a><br>大致意思就是，在.user.ini文件中添加内容：auto_prepend_file=xxx.jpg,那么在所有的php文件执行前都会把xxx.jpg 当作php文件先执行一遍，它类似于.htaccess文件，但是应用比他更广</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/#more" rel="contents">
@@ -722,7 +722,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-01 20:09:11" itemprop="dateModified" datetime="2020-04-01T20:09:11+08:00">2020-04-01</time>
+                <time title="修改时间：2020-06-10 22:28:35" itemprop="dateModified" datetime="2020-06-10T22:28:35+08:00">2020-06-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
