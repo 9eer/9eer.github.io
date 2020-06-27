@@ -2,14 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2020/04/06/HackinOs/</loc>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2020-06-27T14:31:55.893Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/06/17/blind-xxe/</loc>
     
     <lastmod>2020-06-27T14:25:13.907Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/06/17/blind-xxe/</loc>
+    <loc>http://yoursite.com/2020/04/06/HackinOs/</loc>
     
     <lastmod>2020-06-27T14:25:13.907Z</lastmod>
     
@@ -30,14 +37,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/02/04/BUUCTF-Web-WriteUP/</loc>
+    <loc>http://yoursite.com/2020/03/19/buuoj%E5%88%B7%E9%A2%98/</loc>
     
     <lastmod>2020-06-27T14:20:14.315Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/19/buuoj%E5%88%B7%E9%A2%98/</loc>
+    <loc>http://yoursite.com/2020/02/04/BUUCTF-Web-WriteUP/</loc>
     
     <lastmod>2020-06-27T14:20:14.315Z</lastmod>
     
@@ -72,14 +79,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
+    <loc>http://yoursite.com/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/</loc>
     
     <lastmod>2020-06-27T07:59:59.330Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/</loc>
+    <loc>http://yoursite.com/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/</loc>
     
     <lastmod>2020-06-27T07:59:59.330Z</lastmod>
     
