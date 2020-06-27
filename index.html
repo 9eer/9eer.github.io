@@ -1,1184 +1,664 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
+
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Gee" type="application/atom+xml">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Gee">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;index.html">
-<meta property="og:site_name" content="Gee">
-<meta property="og:locale" content="zh-CN">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://yoursite.com/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: true,
-    isPost: false,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>Gee</title>
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Gee">
+  <meta name="keywords" content="">
+  <title>Gee</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+  <script  src="/js/utils.js" ></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Gee</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-  </div>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
 
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-
-</nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
-
-</div>
-<div class="search-pop-overlay"></div>
-
-  </div>
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
-            
-
-  <div class="posts-expand">
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/12/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/12/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" class="post-title-link" itemprop="url">原型链污染</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-12 20:28:19" itemprop="dateCreated datePublished" datetime="2020-05-12T20:28:19+08:00">2020-05-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-01 11:17:30" itemprop="dateModified" datetime="2020-06-01T11:17:30+08:00">2020-06-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-            </span>
-
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
           
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/" class="post-title-link" itemprop="url">无字母数字的webshell</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-04 13:19:31" itemprop="dateCreated datePublished" datetime="2020-05-04T13:19:31+08:00">2020-05-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-13 21:14:03" itemprop="dateModified" datetime="2020-06-13T21:14:03+08:00">2020-06-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在做文件上传或者命令执行的题的时候经常会遇到禁用字母和数字的题目，所以我这里学习记录一下：<br>虽然禁用了字母和数字，但是我们可以利用一些特殊的运算符，来将一些字符组合成字母和数字</p><h3 id="异或构造"><a href="#异或构造" class="headerlink" title="异或构造"></a>异或构造</h3><p>所以首先我们来了解一下php中的异或的概念：<br>在PHP中，两个变量进行异或时，先会将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完，又将结果从二进制转换成了ASCII值，再将ASCII值转换成字符串<br>比如我们想要构造字母A，A的ascii值为65，对应的二进制数为：1000001，我们就可以用字符：{和:来构造，{的ascii码值对应的二进制为：1111011。而<br>:对应的二进制为0111010,两个进行异或操作之后为1000001也就是字母A，我们也可以用同样的方法去构造其他字母（对于有些不可打印字符可以用url编码表示），类似于异或，我们同样也可以用其他运算符;比如取反来构造字母，下面是个典型的用异或来构造无字母的webshell</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/#more" rel="contents">
-                阅读全文 &raquo;
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
               </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/26/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%83%E9%80%B8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+            </li>
           
-            <a href="/2020/04/26/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%83%E9%80%B8/" class="post-title-link" itemprop="url">反序列化字符串逃逸</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-26 13:39:45" itemprop="dateCreated datePublished" datetime="2020-04-26T13:39:45+08:00">2020-04-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 23:00:50" itemprop="dateModified" datetime="2020-06-06T23:00:50+08:00">2020-06-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-            </span>
-
+        
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>首先拿安恒4月的月赛一道反序列化来当例子，这里记录学习一下<br>先看一下源码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">show_source(&quot;index.php&quot;);</span><br><span class="line">function write($data) &#123;</span><br><span class="line">    return str_replace(chr(0) . &apos;*&apos; . chr(0), &apos;\0\0\0&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function read($data) &#123;</span><br><span class="line">    return str_replace(&apos;\0\0\0&apos;, chr(0) . &apos;*&apos; . chr(0), $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class A&#123;</span><br><span class="line">    public $username;</span><br><span class="line">    public $password;</span><br><span class="line">    function __construct($a, $b)&#123;</span><br><span class="line">        $this-&gt;username = $a;</span><br><span class="line">        $this-&gt;password = $b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class B&#123;</span><br><span class="line">    public $b = &apos;gqy&apos;;</span><br><span class="line">    function __destruct()&#123;</span><br><span class="line">        $c = &apos;a&apos;.$this-&gt;b;</span><br><span class="line">        echo $c;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class C&#123;</span><br><span class="line">    public $c;</span><br><span class="line">    function __toString()&#123;</span><br><span class="line">        //flag.php</span><br><span class="line">        echo file_get_contents($this-&gt;c);</span><br><span class="line">        return &apos;nice&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$a = new A($_GET[&apos;a&apos;],$_GET[&apos;b&apos;]);</span><br><span class="line">//省略了存储序列化数据的过程,下面是取出来并反序列化的操作</span><br><span class="line">$b = unserialize(read(write(serialize($a))));</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/26/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%83%E9%80%B8/#more" rel="contents">
-                阅读全文 &raquo;
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
               </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+            </li>
           
-            <a href="/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-title-link" itemprop="url">phar反序列化</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-13 20:36:43" itemprop="dateCreated datePublished" datetime="2020-04-13T20:36:43+08:00">2020-04-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-15 23:07:40" itemprop="dateModified" datetime="2020-05-15T23:07:40+08:00">2020-05-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-            </span>
-
+        
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="phar原理"><a href="#phar原理" class="headerlink" title="phar原理"></a>phar原理</h3><p>phar扩展提供了一种将整个PHP应用程序放入称为“ phar”（PHP存档）的单个文件中的方法，以便于分发和安装。 除了提供此服务外，phar扩展还提供了一种文件格式抽象方法，用于通过PharData类创建和处理tar和zip文件，就像PDO提供了用于访问不同数据库的统一接口一样。 与无法在不同数据库之间进行转换的PDO不同，Phar还可以使用单行代码在tar，zip和phar文件格式之间进行转换。 有关一个示例，请参见Phar :: convertToExecutable（）。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/#more" rel="contents">
-                阅读全文 &raquo;
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
               </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/06/HackinOs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+            </li>
           
-            <a href="/2020/04/06/HackinOs/" class="post-title-link" itemprop="url">HackinOs</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-06 21:14:45" itemprop="dateCreated datePublished" datetime="2020-04-06T21:14:45+08:00">2020-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-10 13:50:28" itemprop="dateModified" datetime="2020-04-10T13:50:28+08:00">2020-04-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98/" itemprop="url" rel="index">
-                    <span itemprop="name">渗透实战</span>
-                  </a>
-                </span>
-            </span>
-
+        
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="信息搜集"><a href="#信息搜集" class="headerlink" title="信息搜集"></a>信息搜集</h3><p>首先，nmap确定靶机地址：192.168.80.4，然后再nmap -A走一波<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7181.JPG" alt="picture"><br>发现开放了8000端口，看起来应该是个博客，访问了一下<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7182.JPG" alt="picture"><br>看见了一个疑似sql注入点，但是试了一下好像不行 ，并且它会自动跳转到localhost，所以就很难进行下去，不过<br>之前nmap扫出来，他还有个upload.php，于是访问一下，看到了一个文件上传的点，然后看页面源代码的话会发现。他给了我们一个提示，他把源码上传到了github，然后好像现在好像已经被删了，就只能看看别人的wp里的源码</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/06/HackinOs/#more" rel="contents">
-                阅读全文 &raquo;
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
               </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/19/buuoj%E5%88%B7%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
+            </li>
           
-            <a href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/" class="post-title-link" itemprop="url">buuoj刷题</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-19 20:09:59" itemprop="dateCreated datePublished" datetime="2020-03-19T20:09:59+08:00">2020-03-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-11 23:18:04" itemprop="dateModified" datetime="2020-06-11T23:18:04+08:00">2020-06-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
-                    <span itemprop="name">题解</span>
-                  </a>
-                </span>
-            </span>
-
+        
           
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="2019SUCTF"><a href="#2019SUCTF" class="headerlink" title="2019SUCTF"></a>2019SUCTF</h3><p>1.checkin<br>一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&lt;?,被过滤了，改一下脚本</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;script language=&quot;php&quot;&gt;eval($_POST[&apos;a&apos;]);&lt;/script&gt;</span><br></pre></td></tr></table></figure><p>改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行了检查。继续尝试发现，应该只是检测了文件头<br>，所以上传一个简单的图片马即可，但是这上传的只是一个图片形式，这题目也没有文件包含的漏洞可以给我们利用，想尝试.htaccess来让他把jpg文件当作php执行，但是尝试了一下，<br>失败了，看了wp才知道要用.user.ini,以前从来没有听说过呀，具体原理可以看看这个大佬的文章<a href="https://wooyun.js.org/drops/user.ini文件构成的php后门.html、" target="_blank" rel="noopener">https://wooyun.js.org/drops/user.ini文件构成的php后门.html、</a><br>大致意思就是，在.user.ini文件中添加内容：auto_prepend_file=xxx.jpg,那么在所有的php文件执行前都会把xxx.jpg 当作php文件先执行一遍，它类似于.htaccess文件，但是应用比他更广</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/#more" rel="contents">
-                阅读全文 &raquo;
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
               </a>
-            </div>
-          <!--/noindex-->
+            </li>
+          
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/04/BUUCTF-Web-WriteUP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/04/BUUCTF-Web-WriteUP/" class="post-title-link" itemprop="url">BUUCTF Web WriteUP</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-04 09:30:51" itemprop="dateCreated datePublished" datetime="2020-02-04T09:30:51+08:00">2020-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-10 22:28:35" itemprop="dateModified" datetime="2020-06-10T22:28:35+08:00">2020-06-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
-                    <span itemprop="name">题解</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="0x01-Warm-Up"><a href="#0x01-Warm-Up" class="headerlink" title="0x01 Warm Up"></a>0x01 Warm Up</h3><p>第一题，开始只有一张图，查看源代码试试，发现了source.php,访问一下source.php,拿到了源码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">    class emmm</span><br><span class="line">    &#123;</span><br><span class="line">        public static function checkFile(&amp;$page)</span><br><span class="line">        &#123;</span><br><span class="line">            $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&quot;hint&quot;=&gt;&quot;hint.php&quot;];</span><br><span class="line">            if (! isset($page) || !is_string($page)) &#123;</span><br><span class="line">                echo &quot;you can&apos;t see it&quot;;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (in_array($page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $_page = mb_substr(</span><br><span class="line">                $page,</span><br><span class="line">                0,</span><br><span class="line">                mb_strpos($page . &apos;?&apos;, &apos;?&apos;)</span><br><span class="line">            );</span><br><span class="line">            if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $_page = urldecode($page);</span><br><span class="line">            $_page = mb_substr(</span><br><span class="line">                $_page,</span><br><span class="line">                0,</span><br><span class="line">                mb_strpos($_page . &apos;?&apos;, &apos;?&apos;)</span><br><span class="line">            );</span><br><span class="line">            if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            echo &quot;you can&apos;t see it&quot;;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (! empty($_REQUEST[&apos;file&apos;])</span><br><span class="line">        &amp;&amp; is_string($_REQUEST[&apos;file&apos;])</span><br><span class="line">        &amp;&amp; emmm::checkFile($_REQUEST[&apos;file&apos;])</span><br><span class="line">    ) &#123;</span><br><span class="line">        include $_REQUEST[&apos;file&apos;];</span><br><span class="line">        exit;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        echo &quot;&lt;br&gt;&lt;img src=\&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot; /&gt;&quot;;</span><br><span class="line">    &#125;  </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/04/BUUCTF-Web-WriteUP/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">upload-labs通关笔记</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-11 11:57:21" itemprop="dateCreated datePublished" datetime="2019-12-11T11:57:21+08:00">2019-12-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-01 20:19:20" itemprop="dateModified" datetime="2020-04-01T20:19:20+08:00">2020-04-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">文件上传</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="0x01-Pass-01"><a href="#0x01-Pass-01" class="headerlink" title="0x01  Pass-01"></a>0x01  Pass-01</h3><p>这关就用js限制了只能提交JPG,PNG，GIF的格式，因为就前端限制，所以抓包改包即可,首先将要上传的木马后缀改为jpg，然后在截获上传的包将其后缀改回来即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B796.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B797.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B798.JPG" alt="picture"><br>上传成功！</p><h3 id="0x02-Pass-02"><a href="#0x02-Pass-02" class="headerlink" title="0x02  Pass-02"></a>0x02  Pass-02</h3><p>和前一关差不多，不过注意做之前要清空上传文件，抓包之后。改即可，不过他这题实在后台验证，不清楚为啥怎么改可以绕过，去网上查了一下发现是MIME类型检测（<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types），只要这个" target="_blank" rel="noopener">https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types），只要这个</a><br>Content-Type类型改成image/gif即可<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7111.JPG" alt="picture"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/02/%E5%85%A5%E9%97%A8%E7%BA%A7%E9%9D%B6%E6%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88Eric%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/02/%E5%85%A5%E9%97%A8%E7%BA%A7%E9%9D%B6%E6%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88Eric%EF%BC%89/" class="post-title-link" itemprop="url">入门级靶机实战（Eric）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-12-02 21:25:08" itemprop="dateCreated datePublished" datetime="2019-12-02T21:25:08+08:00">2019-12-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-03 16:37:54" itemprop="dateModified" datetime="2019-12-03T16:37:54+08:00">2019-12-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98/" itemprop="url" rel="index">
-                    <span itemprop="name">渗透实战</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>目标：拿到在靶机中的flag<br>打开靶机，发现需要登陆，但是用户名密码都不知道，那就只能借助Kail进行渗透，获取用户名密码<br>首先要获取靶机的IP地址，因为靶机和我的Kail在同一网关下，所以扫描c段</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap 192.168.56.0/24</span><br></pre></td></tr></table></figure><p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B732.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B733.JPG" alt="picture"><br>发现了192.168.56.102这个可疑的IP地址，发现他还开放了80端口，所以想去浏览器上访问一下<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B734.JPG" alt="picture"><br>发现这是一个博客，接下来想着再用nmap去具体扫描一下端口</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/12/02/%E5%85%A5%E9%97%A8%E7%BA%A7%E9%9D%B6%E6%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88Eric%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/" class="post-title-link" itemprop="url">sql注入笔记2（sqli-labs  5-30）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-29 17:54:45" itemprop="dateCreated datePublished" datetime="2019-11-29T17:54:45+08:00">2019-11-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-19 21:59:54" itemprop="dateModified" datetime="2020-02-19T21:59:54+08:00">2020-02-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/sql%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index">
-                    <span itemprop="name">sql注入</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>0x01  Less-5</p><p>先输入id=1’ and 1=1报错了，输入id=1’ and ‘1’=’1,有回显，但是没有回显具体内容，所以猜测是字符型的布尔盲注。<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B723.JPG" alt="picture"><br>接下来就是猜库名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B724.JPG" alt="picture"><br>猜测出库名第一个字母为s，然后用同样的方法，猜测出，第二个字母为e，然后以此类推，得到库名security</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:?id=1&apos; and substr(database(),x,1)=&apos;xxx&apos;%23</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-  </div>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
       </ul>
+    </div>
+  </div>
+</nav>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Gee"
-    src="/uploads/1.jpg">
-  <p class="site-author-name" itemprop="name">Gee</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">12</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
+            
+          </div>
+
           
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span></a>
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
       </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/06/21/XSS-1/">XSS(1)</a>
+
+      <a href="/2020/06/21/XSS-1/" class="index-excerpt">
+        
+        
+          
+        
+        <div></div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-06-21
+          </div>
+        
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/06/17/blind-xxe/">blind xxe</a>
+
+      <a href="/2020/06/17/blind-xxe/" class="index-excerpt">
+        
+        
+          
+        
+        <div></div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-06-17
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/XML/">XML</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/05/12/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/">原型链污染</a>
+
+      <a href="/2020/05/12/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" class="index-excerpt">
+        
+        
+          
+        
+        <div></div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-05-12
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/JavaScript/">JavaScript</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/">无字母数字的webshell</a>
+
+      <a href="/2020/05/04/%E6%97%A0%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E7%9A%84webshell/" class="index-excerpt">
+        
+        
+          
+        
+        <div>在做文件上传或者命令执行的题的时候经常会遇到禁用字母和数字的题目，所以我这里学习记录一下：虽然禁用了字母和数字，但是我们可以利用一些特殊的运算符，来将一些字符组合成字母和数字
+
+异或构造所以首先我们来了解一下php中的异或的概念：在PHP中，两个变量进行异或时，先会将字符串转换成ASCII值，再将ASCII值转换成二进制再进行异或，异或完，又将结果从二进制转换成了ASCII值，再将ASCII值转换</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-05-04
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/PHP/">PHP</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/04/26/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%83%E9%80%B8/">反序列化字符串逃逸</a>
+
+      <a href="/2020/04/26/%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%80%83%E9%80%B8/" class="index-excerpt">
+        
+        
+          
+        
+        <div>首先拿安恒4月的月赛一道反序列化来当例子，这里记录学习一下先看一下源码：
+ &lt;?php
+show_source("index.php");
+function write($data) &#123;
+    return str_replace(chr(0) . '*' . chr(0), '\0\0\0', $data);
+&#125;
+
+function read($data) &#123</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-04-26
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/PHP/">PHP</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">phar反序列化</a>
+
+      <a href="/2020/04/13/phar%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+phar原理phar扩展提供了一种将整个PHP应用程序放入称为“ phar”（PHP存档）的单个文件中的方法，以便于分发和安装。 除了提供此服务外，phar扩展还提供了一种文件格式抽象方法，用于通过PharData类创建和处理tar和zip文件，就像PDO提供了用于访问不同数据库的统一接口一样。 与无法在不同数据库之间进行转换的PDO不同，Phar还可以使用单行代码在tar，zip和phar文件</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-04-13
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/PHP/">PHP</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/04/06/HackinOs/">HackinOs</a>
+
+      <a href="/2020/04/06/HackinOs/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+信息搜集首先，nmap确定靶机地址：192.168.80.4，然后再nmap -A走一波发现开放了8000端口，看起来应该是个博客，访问了一下看见了一个疑似sql注入点，但是试了一下好像不行 ，并且它会自动跳转到localhost，所以就很难进行下去，不过之前nmap扫出来，他还有个upload.php，于是访问一下，看到了一个文件上传的点，然后看页面源代码的话会发现。他给了我们一个提示，他把源</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-04-06
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98/">渗透实战</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/">buuoj刷题</a>
+
+      <a href="/2020/03/19/buuoj%E5%88%B7%E9%A2%98/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+2019SUCTF1.checkin一道文件上传的题目，直接上传php被拦截，改后缀名上传，发现&lt;?,被过滤了，改一下脚本
+&lt;script language="php"&gt;eval($_POST['a']);&lt;/script&gt;
+改完之后居然还是报错了！！不过他给了提示报错内容为：exif_imagetype:not image! ，这应该是对文件格式进行了检查。继续尝</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-03-19
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%A2%98%E8%A7%A3/">题解</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2020/02/04/BUUCTF-Web-WriteUP/">BUUCTF Web WriteUP</a>
+
+      <a href="/2020/02/04/BUUCTF-Web-WriteUP/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+0x01 Warm Up第一题，开始只有一张图，查看源代码试试，发现了source.php,访问一下source.php,拿到了源码：
+&lt;?php
+    highlight_file(__FILE__);
+    class emmm
+    &#123;
+        public static function checkFile(&amp;$page)
+        &#123</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2020-02-04
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E9%A2%98%E8%A7%A3/">题解</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/">upload-labs通关笔记</a>
+
+      <a href="/2019/12/11/up-load%E9%80%9A%E5%85%B3%E7%AC%94%E8%AE%B0/" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+0x01  Pass-01这关就用js限制了只能提交JPG,PNG，GIF的格式，因为就前端限制，所以抓包改包即可,首先将要上传的木马后缀改为jpg，然后在截获上传的包将其后缀改回来即可上传成功！
+
+0x02  Pass-02和前一关差不多，不过注意做之前要清空上传文件，抓包之后。改即可，不过他这题实在后台验证，不清楚为啥怎么改可以绕过，去网上查了一下发现是MIME类型检测（https://de</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-12-11
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">文件上传</a>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="iconfont icon-arrowright"></i></a>
+    </span>
   </nav>
-</div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
     </a>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Gee</span>
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
-  </div>
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
   
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
     </div>
-        
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
+    
   </div>
+</footer>
 
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/pisces.js"></script>
-<script src="/js/next-boot.js"></script>
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-  
-
-
-
-
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
+<!-- Plugins -->
 
 
   
-
+    <script  src="/js/lazyload.js" ></script>
   
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "An elegant Material-Design theme for Hexo&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>

